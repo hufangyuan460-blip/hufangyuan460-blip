@@ -1,0 +1,31 @@
+name: Generate Minecraft Contribution Snake
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Generate Minecraft ore snake SVGs
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/mc-snake-dark.svg?color_snake=55FF55&color_dots=1e1b18,2d5a27,55aa55,38bdf8,facc15
+            dist/mc-snake-light.svg?color_snake=2e7d32&color_dots=e7e5e4,86efac,22c55e,0ea5e9,eab308
+
+      - name: Push snake SVGs to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target_branch: output
+          build_dir: dist

@@ -1,0 +1,619 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260" width="1000" height="260" shape-rendering="crispEdges" role="img" aria-label="Fangyuan's World - Minecraft Overworld Night Banner">
+  <title>FANGYUAN'S WORLD — Redstone · AI Agents · Code Animation</title>
+
+  <defs>
+    <!-- ============================================================
+         可自定义文字区：直接修改下面两行即可同步更新阴影与主文字
+         ============================================================ -->
+    <text id="hero-title" x="500" y="108" text-anchor="middle" class="pixel-title">FANGYUAN'S WORLD</text>
+    <text id="hero-subtitle" x="500" y="150" text-anchor="middle" class="pixel-subtitle">Redstone · AI Agents · Code Animation</text>
+
+    <!-- 裁切区域 -->
+    <clipPath id="banner-clip">
+      <rect x="4" y="4" width="992" height="252"/>
+    </clipPath>
+    <clipPath id="xp-fill-local">
+      <rect x="0" y="0" width="576" height="10"/>
+    </clipPath>
+
+    <!-- 远景像素云组（用于无缝平铺飘动） -->
+    <g id="clouds-far">
+      <!-- 云 1 -->
+      <rect x="148" y="24" width="84" height="4" fill="#2a407a"/>
+      <rect x="140" y="28" width="104" height="8" fill="#1f3161"/>
+      <rect x="152" y="36" width="80" height="4" fill="#15234a"/>
+      <!-- 云 2 -->
+      <rect x="444" y="18" width="96" height="4" fill="#2a407a"/>
+      <rect x="432" y="22" width="120" height="8" fill="#1f3161"/>
+      <rect x="448" y="30" width="88" height="4" fill="#15234a"/>
+      <!-- 云 3 -->
+      <rect x="740" y="30" width="76" height="4" fill="#2a407a"/>
+      <rect x="728" y="34" width="100" height="8" fill="#1f3161"/>
+      <rect x="744" y="42" width="68" height="4" fill="#15234a"/>
+    </g>
+
+    <!-- 近景像素云组（双层视差） -->
+    <g id="clouds-near">
+      <!-- 云 A -->
+      <rect x="240" y="44" width="64" height="4" fill="#324c8f"/>
+      <rect x="228" y="48" width="88" height="8" fill="#243970"/>
+      <rect x="236" y="56" width="72" height="4" fill="#192954"/>
+      <!-- 云 B -->
+      <rect x="628" y="40" width="72" height="4" fill="#324c8f"/>
+      <rect x="616" y="44" width="96" height="8" fill="#243970"/>
+      <rect x="624" y="52" width="80" height="4" fill="#192954"/>
+      <!-- 云 C（低空薄云） -->
+      <rect x="888" y="156" width="56" height="4" fill="#283f78"/>
+      <rect x="880" y="160" width="72" height="4" fill="#1d2f5e"/>
+    </g>
+
+    <!-- 发光钻石矿石块模板（28x20 像素块） -->
+    <g id="diamond-ore">
+      <rect x="0" y="0" width="28" height="20" fill="#464d59"/>
+      <rect x="0" y="0" width="28" height="4" fill="#525a69"/>
+      <rect x="4" y="16" width="20" height="4" fill="#383e48"/>
+      <rect x="24" y="4" width="4" height="16" fill="#383e48"/>
+      <!-- 钻石晶体 -->
+      <rect x="4" y="4" width="8" height="4" fill="#06b6d4"/>
+      <rect x="4" y="8" width="4" height="4" fill="#22d3ee"/>
+      <rect x="16" y="8" width="8" height="4" fill="#06b6d4"/>
+      <rect x="20" y="4" width="4" height="4" fill="#22d3ee"/>
+      <rect x="12" y="12" width="8" height="4" fill="#22d3ee"/>
+      <!-- 高光闪烁点 -->
+      <g class="diamond-glow">
+        <rect x="4" y="4" width="4" height="4" fill="#a5f3fc"/>
+        <rect x="16" y="8" width="4" height="4" fill="#67e8f9"/>
+        <rect x="12" y="12" width="4" height="4" fill="#cffafe"/>
+      </g>
+    </g>
+  </defs>
+
+  <style>
+    .pixel-title {
+      font-family: 'Courier New', Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      shape-rendering: geometricPrecision;
+    }
+    .pixel-subtitle {
+      font-family: 'Courier New', Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      shape-rendering: geometricPrecision;
+    }
+
+    /* 星光闪烁 */
+    @keyframes twinkleA {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+    @keyframes twinkleB {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    @keyframes twinkleC {
+      0%, 100% { opacity: 0.85; }
+      40% { opacity: 0.15; }
+      70% { opacity: 0.95; }
+    }
+    .star-a { animation: twinkleA 2.6s steps(4, end) infinite; }
+    .star-b { animation: twinkleB 3.4s steps(4, end) infinite; }
+    .star-c { animation: twinkleC 4.2s steps(5, end) infinite; }
+
+    /* 月晕呼吸 */
+    @keyframes moonPulse {
+      0%, 100% { opacity: 0.14; }
+      50% { opacity: 0.24; }
+    }
+    .moon-halo { animation: moonPulse 5.5s ease-in-out infinite; }
+
+    /* 像素云匀速飘动 */
+    @keyframes driftFar {
+      from { transform: translateX(0); }
+      to { transform: translateX(-1000px); }
+    }
+    @keyframes driftNear {
+      from { transform: translateX(0); }
+      to { transform: translateX(-1000px); }
+    }
+    .cloud-far { animation: driftFar 68s linear infinite; opacity: 0.62; }
+    .cloud-near { animation: driftNear 46s linear infinite; opacity: 0.52; }
+
+    /* 红石火把脉冲 */
+    @keyframes redstonePulse {
+      0%, 100% { opacity: 0.22; }
+      50% { opacity: 0.48; }
+    }
+    .redstone-aura { animation: redstonePulse 2.2s ease-in-out infinite; }
+    .redstone-dot { animation: twinkleA 1.8s steps(3, end) infinite; }
+
+    /* 钻石矿石微光 + 浮尘（通过 CSS 变量穿透 use 实例实现错峰闪烁） */
+    @keyframes diamondShine {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 1; }
+    }
+    .diamond-glow { animation: diamondShine 2.8s ease-in-out var(--ore-delay, 0s) infinite; }
+    .ore-d1 { --ore-delay: 0s; }
+    .ore-d2 { --ore-delay: 0.9s; }
+    .ore-d3 { --ore-delay: 1.7s; }
+    .ore-d4 { --ore-delay: 0.4s; }
+    .ore-d5 { --ore-delay: 1.3s; }
+
+    @keyframes sparkRise {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 0.95; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-16px); opacity: 0; }
+    }
+    .ore-spark-1 { animation: sparkRise 3.2s steps(6, end) infinite; }
+    .ore-spark-2 { animation: sparkRise 3.8s steps(6, end) 1.4s infinite; }
+    .ore-spark-3 { animation: sparkRise 3.5s steps(6, end) 2.2s infinite; }
+
+    /* 苦力怕轻微呼吸待机 */
+    @keyframes creeperBreath {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    .creeper-body { animation: creeperBreath 3.2s steps(2, end) infinite; }
+
+    /* 底部经验条充能与高光扫光 */
+    @keyframes xpFillBreath {
+      0%, 100% { transform: scaleX(0.76); }
+      50% { transform: scaleX(0.88); }
+    }
+    @keyframes xpGlintSweep {
+      0% { transform: translateX(-48px); opacity: 0; }
+      12% { opacity: 0.5; }
+      62% { opacity: 0.5; }
+      75% { transform: translateX(580px); opacity: 0; }
+      100% { transform: translateX(580px); opacity: 0; }
+    }
+    .xp-fill {
+      transform-origin: 0 0;
+      animation: xpFillBreath 6s ease-in-out infinite;
+    }
+    .xp-glint {
+      animation: xpGlintSweep 4.6s linear infinite;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0); opacity: 0.85; }
+      50% { transform: translateY(-2px); opacity: 1; }
+    }
+    .xp-orb { animation: orbFloat 2.4s steps(2, end) infinite; }
+    .xp-orb-delay { animation: orbFloat 2.4s steps(2, end) 1.2s infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .star-a, .star-b, .star-c, .moon-halo, .cloud-far, .cloud-near,
+      .redstone-aura, .redstone-dot, .diamond-glow, .ore-spark-1,
+      .ore-spark-2, .ore-spark-3, .creeper-body, .xp-fill, .xp-glint,
+      .xp-orb, .xp-orb-delay {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <!-- 全部主画面内容 -->
+  <g clip-path="url(#banner-clip)">
+    <!-- 1. 深蓝阶梯像素夜空 -->
+    <rect x="0" y="0" width="1000" height="36" fill="#060a17"/>
+    <rect x="0" y="36" width="1000" height="36" fill="#091024"/>
+    <rect x="0" y="72" width="1000" height="40" fill="#0d1734"/>
+    <rect x="0" y="112" width="1000" height="40" fill="#122048"/>
+    <rect x="0" y="152" width="1000" height="36" fill="#182b5e"/>
+    <rect x="0" y="188" width="1000" height="36" fill="#1e3673"/>
+
+    <!-- 像素天空过渡抖动点 -->
+    <g fill="#091024">
+      <rect x="180" y="32" width="4" height="4"/><rect x="340" y="32" width="4" height="4"/>
+      <rect x="520" y="32" width="4" height="4"/><rect x="700" y="32" width="4" height="4"/>
+      <rect x="860" y="32" width="4" height="4"/>
+    </g>
+    <g fill="#122048">
+      <rect x="120" y="108" width="4" height="4"/><rect x="260" y="108" width="4" height="4"/>
+      <rect x="760" y="108" width="4" height="4"/><rect x="920" y="108" width="4" height="4"/>
+    </g>
+
+    <!-- 2. 经典方形 Minecraft 像素月亮 -->
+    <g>
+      <rect x="50" y="10" width="76" height="76" fill="#60a5fa" opacity="0.06"/>
+      <rect x="58" y="18" width="60" height="60" fill="#93c5fd" class="moon-halo"/>
+      <rect x="68" y="28" width="40" height="40" fill="#e2e8f0"/>
+      <rect x="68" y="28" width="40" height="4" fill="#ffffff"/>
+      <rect x="68" y="28" width="4" height="40" fill="#f8fafc"/>
+      <!-- 月球陨石坑像素细节 -->
+      <rect x="76" y="36" width="8" height="8" fill="#cbd5e1"/>
+      <rect x="80" y="40" width="4" height="4" fill="#94a3b8"/>
+      <rect x="96" y="36" width="4" height="8" fill="#cbd5e1"/>
+      <rect x="88" y="52" width="12" height="8" fill="#cbd5e1"/>
+      <rect x="92" y="56" width="4" height="4" fill="#94a3b8"/>
+      <rect x="72" y="56" width="8" height="4" fill="#cbd5e1"/>
+    </g>
+
+    <!-- 3. 闪烁像素星光 -->
+    <g class="star-a">
+      <rect x="164" y="16" width="4" height="4" fill="#f8fafc"/>
+      <rect x="304" y="24" width="4" height="4" fill="#bae6fd"/>
+      <rect x="412" y="16" width="4" height="4" fill="#fef08a"/>
+      <rect x="596" y="20" width="4" height="4" fill="#f8fafc"/>
+      <rect x="788" y="20" width="4" height="4" fill="#bae6fd"/>
+      <rect x="936" y="28" width="4" height="4" fill="#f8fafc"/>
+      <rect x="204" y="96" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="768" y="96" width="4" height="4" fill="#fef08a"/>
+      <!-- 十字亮星 1 -->
+      <rect x="236" y="40" width="2" height="6" fill="#e0f2fe"/>
+      <rect x="234" y="42" width="6" height="2" fill="#e0f2fe"/>
+      <rect x="236" y="42" width="2" height="2" fill="#ffffff"/>
+    </g>
+    <g class="star-b">
+      <rect x="140" y="56" width="4" height="4" fill="#93c5fd"/>
+      <rect x="276" y="52" width="2" height="2" fill="#f8fafc"/>
+      <rect x="364" y="44" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="516" y="14" width="4" height="4" fill="#bae6fd"/>
+      <rect x="664" y="32" width="4" height="4" fill="#f8fafc"/>
+      <rect x="728" y="56" width="2" height="2" fill="#bae6fd"/>
+      <rect x="856" y="16" width="4" height="4" fill="#fef08a"/>
+      <rect x="960" y="64" width="4" height="4" fill="#bae6fd"/>
+      <rect x="32" y="100" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="172" y="132" width="2" height="2" fill="#93c5fd"/>
+      <!-- 十字亮星 2 -->
+      <rect x="814" y="56" width="2" height="6" fill="#fef08a"/>
+      <rect x="812" y="58" width="6" height="2" fill="#fef08a"/>
+      <rect x="814" y="58" width="2" height="2" fill="#ffffff"/>
+    </g>
+    <g class="star-c">
+      <rect x="20" y="32" width="4" height="4" fill="#93c5fd"/>
+      <rect x="204" y="28" width="2" height="2" fill="#f8fafc"/>
+      <rect x="468" y="40" width="2" height="2" fill="#bae6fd"/>
+      <rect x="560" y="46" width="2" height="2" fill="#e0f2fe"/>
+      <rect x="700" y="16" width="4" height="4" fill="#93c5fd"/>
+      <rect x="900" y="44" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="920" y="104" width="4" height="4" fill="#93c5fd"/>
+      <rect x="148" y="92" width="2" height="2" fill="#f8fafc"/>
+      <rect x="784" y="132" width="2" height="2" fill="#bae6fd"/>
+    </g>
+
+    <!-- 4. 飘动像素云（远近双层无缝循环） -->
+    <g class="cloud-far">
+      <use href="#clouds-far" x="0"/>
+      <use href="#clouds-far" x="1000"/>
+    </g>
+    <g class="cloud-near">
+      <use href="#clouds-near" x="0"/>
+      <use href="#clouds-near" x="1000"/>
+    </g>
+
+    <!-- 5. 远山像素剪影 -->
+    <g fill="#0d1838">
+      <!-- 左侧远山 -->
+      <rect x="0" y="168" width="52" height="36"/>
+      <rect x="24" y="156" width="40" height="48"/>
+      <rect x="52" y="164" width="56" height="40"/>
+      <rect x="108" y="176" width="64" height="28"/>
+      <rect x="172" y="188" width="48" height="16"/>
+      <!-- 右侧远山 -->
+      <rect x="760" y="188" width="44" height="16"/>
+      <rect x="804" y="176" width="60" height="28"/>
+      <rect x="864" y="164" width="64" height="40"/>
+      <rect x="928" y="152" width="72" height="52"/>
+    </g>
+    <!-- 远山月光顶脊微亮边 -->
+    <g fill="#1b3066">
+      <rect x="24" y="156" width="40" height="4"/>
+      <rect x="52" y="164" width="56" height="4"/>
+      <rect x="108" y="176" width="64" height="4"/>
+      <rect x="864" y="164" width="64" height="4"/>
+      <rect x="928" y="152" width="72" height="4"/>
+    </g>
+
+    <!-- 6. 左侧像素橡树 + 发光红石火把（点缀左侧场景） -->
+    <g>
+      <!-- 树干（立在左侧高地 y=192 上） -->
+      <rect x="52" y="160" width="12" height="32" fill="#4f3521"/>
+      <rect x="52" y="160" width="4" height="32" fill="#63432a"/>
+      <rect x="60" y="160" width="4" height="32" fill="#3a2617"/>
+      <!-- 树叶（方块像素树冠） -->
+      <rect x="32" y="136" width="52" height="24" fill="#1b542c"/>
+      <rect x="40" y="124" width="36" height="12" fill="#236b38"/>
+      <rect x="48" y="120" width="20" height="4" fill="#2c8245"/>
+      <!-- 树叶深浅纹理 -->
+      <rect x="36" y="140" width="8" height="8" fill="#25703b"/>
+      <rect x="52" y="132" width="8" height="8" fill="#2c8245"/>
+      <rect x="68" y="144" width="12" height="12" fill="#143d20"/>
+      <rect x="44" y="152" width="12" height="8" fill="#143d20"/>
+      <rect x="32" y="152" width="8" height="8" fill="#143d20"/>
+    </g>
+
+    <!-- 红石火把（x=124，立在 y=192 草地上） -->
+    <g>
+      <rect x="112" y="164" width="28" height="28" fill="#ef4444" class="redstone-aura"/>
+      <rect x="118" y="170" width="16" height="16" fill="#f87171" opacity="0.28"/>
+      <!-- 木柄 -->
+      <rect x="124" y="180" width="4" height="12" fill="#7c5434"/>
+      <rect x="124" y="188" width="4" height="4" fill="#593b22"/>
+      <!-- 发光红石火把头 -->
+      <rect x="124" y="176" width="4" height="4" fill="#ef4444"/>
+      <rect x="125" y="177" width="2" height="2" fill="#fecaca"/>
+      <!-- 红石微粒 -->
+      <rect x="120" y="168" width="2" height="2" fill="#f87171" class="ore-spark-2"/>
+      <rect x="130" y="172" width="2" height="2" fill="#fca5a5" class="ore-spark-1"/>
+    </g>
+
+    <!-- 7. 中间复古像素排版：主标题 + 像素分隔条 + 副标题 -->
+    <g>
+      <!-- 主标题 3D 阶梯像素阴影（自动跟随顶部 defs 中的 #hero-title） -->
+      <use href="#hero-title" x="4" y="4" fill="#050814"/>
+      <use href="#hero-title" x="2" y="2" fill="#263c6e"/>
+      <use href="#hero-title" x="0" y="0" fill="#f8fafc"/>
+
+      <!-- 复古像素分隔装饰条（中央钻石 + 两侧红石点） -->
+      <rect x="336" y="124" width="144" height="2" fill="#274073"/>
+      <rect x="520" y="124" width="144" height="2" fill="#274073"/>
+      <rect x="384" y="124" width="96" height="2" fill="#38bdf8" opacity="0.45"/>
+      <rect x="520" y="124" width="96" height="2" fill="#38bdf8" opacity="0.45"/>
+      <!-- 中央像素钻石徽章 -->
+      <rect x="498" y="119" width="4" height="12" fill="#38bdf8"/>
+      <rect x="494" y="123" width="12" height="4" fill="#38bdf8"/>
+      <rect x="498" y="123" width="4" height="4" fill="#e0f2fe"/>
+      <!-- 两侧红石指示灯 -->
+      <rect x="484" y="123" width="4" height="4" fill="#ef4444" class="redstone-dot"/>
+      <rect x="512" y="123" width="4" height="4" fill="#ef4444" class="redstone-dot"/>
+
+      <!-- 副标题（自动跟随顶部 defs 中的 #hero-subtitle） -->
+      <use href="#hero-subtitle" x="2" y="2" fill="#050814"/>
+      <use href="#hero-subtitle" x="0" y="0" fill="#7dd3fc"/>
+    </g>
+
+    <!-- 8. 底部草方块 / 泥土 / 石头横截面地形 -->
+    <!-- 8a. 深层石头基底 -->
+    <rect x="0" y="220" width="1000" height="40" fill="#414752"/>
+    <!-- 石头像素纹理 -->
+    <g fill="#353a44">
+      <rect x="12" y="224" width="16" height="8"/><rect x="96" y="232" width="20" height="8"/>
+      <rect x="220" y="224" width="24" height="8"/><rect x="380" y="228" width="20" height="8"/>
+      <rect x="484" y="224" width="28" height="8"/><rect x="580" y="228" width="24" height="8"/>
+      <rect x="720" y="224" width="24" height="8"/><rect x="820" y="232" width="24" height="8"/>
+      <rect x="944" y="224" width="24" height="8"/><rect x="136" y="244" width="24" height="8"/>
+      <rect x="852" y="248" width="20" height="8"/><rect x="928" y="244" width="28" height="8"/>
+    </g>
+    <g fill="#525966">
+      <rect x="36" y="236" width="12" height="4"/><rect x="124" y="224" width="16" height="4"/>
+      <rect x="268" y="228" width="16" height="4"/><rect x="436" y="224" width="20" height="4"/>
+      <rect x="540" y="224" width="16" height="4"/><rect x="688" y="228" width="16" height="4"/>
+      <rect x="796" y="224" width="16" height="4"/><rect x="920" y="228" width="16" height="4"/>
+      <rect x="24" y="248" width="20" height="4"/><rect x="808" y="244" width="16" height="4"/>
+    </g>
+
+    <!-- 8b. 泥土层（左侧高地 y=200..224，中间平地 y=212..220，右侧高地 y=204..224） -->
+    <rect x="0" y="200" width="160" height="24" fill="#6e4b2e"/>
+    <rect x="160" y="212" width="632" height="8" fill="#6e4b2e"/>
+    <rect x="792" y="204" width="208" height="20" fill="#6e4b2e"/>
+    <!-- 泥土颗粒纹理 -->
+    <g fill="#593b22">
+      <rect x="16" y="208" width="8" height="4"/><rect x="44" y="216" width="12" height="4"/>
+      <rect x="88" y="208" width="8" height="8"/><rect x="132" y="216" width="12" height="4"/>
+      <rect x="184" y="216" width="12" height="4"/><rect x="244" y="216" width="8" height="4"/>
+      <rect x="308" y="216" width="12" height="4"/><rect x="392" y="216" width="12" height="4"/>
+      <rect x="464" y="216" width="12" height="4"/><rect x="556" y="216" width="12" height="4"/>
+      <rect x="628" y="216" width="12" height="4"/><rect x="716" y="216" width="12" height="4"/>
+      <rect x="816" y="212" width="12" height="4"/><rect x="872" y="216" width="12" height="4"/>
+      <rect x="944" y="212" width="12" height="4"/><rect x="976" y="216" width="8" height="4"/>
+    </g>
+    <g fill="#845c3b">
+      <rect x="28" y="212" width="8" height="4"/><rect x="108" y="212" width="8" height="4"/>
+      <rect x="216" y="216" width="8" height="4"/><rect x="352" y="216" width="8" height="4"/>
+      <rect x="512" y="216" width="8" height="4"/><rect x="676" y="216" width="8" height="4"/>
+      <rect x="844" y="212" width="8" height="4"/><rect x="916" y="216" width="8" height="4"/>
+    </g>
+
+    <!-- 8c. 草方块表层（左高地 y=192，中平地 y=204，右高地 y=196） -->
+    <!-- 左侧高地草坪 x=0..160 -->
+    <rect x="0" y="192" width="160" height="8" fill="#52a32b"/>
+    <rect x="0" y="192" width="160" height="4" fill="#63ba38"/>
+    <g fill="#448c22">
+      <rect x="12" y="196" width="12" height="4"/><rect x="48" y="196" width="16" height="4"/>
+      <rect x="96" y="196" width="12" height="4"/><rect x="136" y="196" width="16" height="4"/>
+      <!-- 垂坠草边 -->
+      <rect x="8" y="200" width="8" height="4"/><rect x="32" y="200" width="4" height="8"/>
+      <rect x="64" y="200" width="12" height="4"/><rect x="108" y="200" width="8" height="4"/>
+      <rect x="148" y="200" width="8" height="8"/>
+    </g>
+    <g fill="#74cc47">
+      <rect x="20" y="192" width="12" height="4"/><rect x="76" y="192" width="16" height="4"/>
+      <rect x="124" y="192" width="12" height="4"/>
+    </g>
+
+    <!-- 中间平地草坪 x=160..792 -->
+    <rect x="160" y="204" width="632" height="8" fill="#52a32b"/>
+    <rect x="160" y="204" width="632" height="4" fill="#63ba38"/>
+    <g fill="#74cc47">
+      <rect x="176" y="204" width="16" height="4"/><rect x="240" y="204" width="12" height="4"/>
+      <rect x="316" y="204" width="20" height="4"/><rect x="404" y="204" width="16" height="4"/>
+      <rect x="488" y="204" width="20" height="4"/><rect x="580" y="204" width="16" height="4"/>
+      <rect x="668" y="204" width="16" height="4"/><rect x="744" y="204" width="16" height="4"/>
+    </g>
+    <g fill="#448c22">
+      <rect x="168" y="212" width="8" height="4"/><rect x="204" y="212" width="12" height="4"/>
+      <rect x="256" y="212" width="8" height="4"/><rect x="292" y="212" width="4" height="8"/>
+      <rect x="340" y="212" width="12" height="4"/><rect x="388" y="212" width="8" height="4"/>
+      <rect x="436" y="212" width="12" height="4"/><rect x="496" y="212" width="8" height="4"/>
+      <rect x="544" y="212" width="12" height="4"/><rect x="600" y="212" width="8" height="4"/>
+      <rect x="652" y="212" width="12" height="4"/><rect x="708" y="212" width="8" height="4"/>
+      <rect x="760" y="212" width="12" height="4"/>
+    </g>
+
+    <!-- 右侧小丘草坪 x=792..1000（苦力怕脚下） -->
+    <rect x="792" y="196" width="208" height="8" fill="#52a32b"/>
+    <rect x="792" y="196" width="208" height="4" fill="#63ba38"/>
+    <g fill="#74cc47">
+      <rect x="804" y="196" width="16" height="4"/><rect x="876" y="196" width="16" height="4"/>
+      <rect x="944" y="196" width="20" height="4"/>
+    </g>
+    <g fill="#448c22">
+      <rect x="796" y="204" width="8" height="8"/><rect x="828" y="204" width="12" height="4"/>
+      <rect x="868" y="204" width="8" height="4"/><rect x="908" y="204" width="12" height="4"/>
+      <rect x="952" y="204" width="8" height="8"/><rect x="984" y="204" width="8" height="4"/>
+    </g>
+
+    <!-- 8d. 地下发光钻石矿石点缀（5处） -->
+    <g class="ore-d1"><use href="#diamond-ore" x="56" y="228"/></g>
+    <g class="ore-d2"><use href="#diamond-ore" x="156" y="232"/></g>
+    <g class="ore-d3"><use href="#diamond-ore" x="328" y="220"/></g>
+    <g class="ore-d4"><use href="#diamond-ore" x="636" y="220"/></g>
+    <g class="ore-d5"><use href="#diamond-ore" x="888" y="228"/></g>
+
+    <!-- 钻石矿石升腾微光粒子 -->
+    <rect x="66" y="224" width="2" height="2" fill="#67e8f9" class="ore-spark-1"/>
+    <rect x="342" y="218" width="2" height="2" fill="#a5f3fc" class="ore-spark-2"/>
+    <rect x="902" y="224" width="2" height="2" fill="#67e8f9" class="ore-spark-3"/>
+
+    <!-- 草地小花像素点缀（增加主世界呼吸感） -->
+    <g>
+      <rect x="224" y="196" width="4" height="8" fill="#3a7a1d"/>
+      <rect x="224" y="192" width="4" height="4" fill="#38bdf8"/>
+      <rect x="732" y="196" width="4" height="8" fill="#3a7a1d"/>
+      <rect x="732" y="192" width="4" height="4" fill="#facc15"/>
+    </g>
+
+    <!-- 9. 精致像素苦力怕（右侧草丘 y=196，4px 网格 + 2.5D 立体侧面） -->
+    <!-- 脚下接地投影 -->
+    <rect x="832" y="196" width="52" height="4" fill="#1b3d12" opacity="0.6"/>
+
+    <g transform="translate(836, 92)">
+      <g class="creeper-body">
+        <!-- === 头部正面 8x8 格 (x=4..36, y=0..32) === -->
+        <rect x="4" y="0" width="32" height="32" fill="#53b334"/>
+        <!-- 头部迷彩像素纹理 -->
+        <rect x="4" y="0" width="8" height="4" fill="#68cf44"/>
+        <rect x="16" y="0" width="8" height="8" fill="#469e2a"/>
+        <rect x="28" y="0" width="8" height="4" fill="#7be055"/>
+        <rect x="4" y="4" width="4" height="8" fill="#469e2a"/>
+        <rect x="12" y="4" width="4" height="4" fill="#7be055"/>
+        <rect x="24" y="4" width="4" height="4" fill="#68cf44"/>
+        <rect x="32" y="8" width="4" height="8" fill="#469e2a"/>
+        <rect x="4" y="16" width="4" height="8" fill="#68cf44"/>
+        <rect x="8" y="16" width="4" height="4" fill="#469e2a"/>
+        <rect x="28" y="16" width="4" height="8" fill="#7be055"/>
+        <rect x="4" y="24" width="8" height="8" fill="#469e2a"/>
+        <rect x="16" y="28" width="8" height="4" fill="#68cf44"/>
+        <rect x="28" y="24" width="8" height="8" fill="#469e2a"/>
+        <!-- 头部 3D 暗面右侧 (x=36..44, y=0..32) -->
+        <rect x="36" y="0" width="8" height="32" fill="#377d20"/>
+        <rect x="36" y="4" width="4" height="8" fill="#2e6b1b"/>
+        <rect x="40" y="12" width="4" height="8" fill="#419126"/>
+        <rect x="36" y="24" width="8" height="4" fill="#2e6b1b"/>
+        <!-- 经典苦力怕像素脸（严格 8x8 标准比例） -->
+        <rect x="8" y="8" width="8" height="8" fill="#090f09"/>
+        <rect x="24" y="8" width="8" height="8" fill="#090f09"/>
+        <rect x="16" y="16" width="8" height="4" fill="#090f09"/>
+        <rect x="12" y="20" width="16" height="8" fill="#090f09"/>
+        <rect x="12" y="28" width="4" height="4" fill="#090f09"/>
+        <rect x="24" y="28" width="4" height="4" fill="#090f09"/>
+
+        <!-- === 躯干正面 (x=8..32, y=32..80) + 侧面 (x=32..40, y=32..80) === -->
+        <rect x="8" y="32" width="24" height="48" fill="#50ad31"/>
+        <!-- 颈部投影 -->
+        <rect x="8" y="32" width="24" height="4" fill="#31701c"/>
+        <!-- 躯干迷彩细节 -->
+        <rect x="12" y="36" width="8" height="8" fill="#65c942"/>
+        <rect x="24" y="40" width="8" height="8" fill="#429427"/>
+        <rect x="8" y="44" width="8" height="12" fill="#429427"/>
+        <rect x="16" y="48" width="8" height="8" fill="#77db53"/>
+        <rect x="12" y="56" width="8" height="8" fill="#429427"/>
+        <rect x="24" y="56" width="8" height="8" fill="#65c942"/>
+        <rect x="8" y="64" width="8" height="8" fill="#65c942"/>
+        <rect x="20" y="64" width="8" height="12" fill="#429427"/>
+        <rect x="12" y="72" width="8" height="8" fill="#3a8522"/>
+        <!-- 躯干 3D 侧面 -->
+        <rect x="32" y="32" width="8" height="48" fill="#35781e"/>
+        <rect x="32" y="32" width="8" height="4" fill="#275c15"/>
+        <rect x="32" y="44" width="4" height="8" fill="#2c6619"/>
+        <rect x="36" y="56" width="4" height="12" fill="#3f8f24"/>
+        <rect x="32" y="72" width="8" height="8" fill="#2c6619"/>
+
+        <!-- === 四足（前左、前右 + 后侧立体足） === -->
+        <!-- 后侧右足（略高 4px 体现纵深） -->
+        <rect x="32" y="80" width="12" height="20" fill="#2d691a"/>
+        <rect x="36" y="84" width="4" height="8" fill="#245414"/>
+        <rect x="32" y="96" width="4" height="4" fill="#17380c"/>
+        <rect x="40" y="96" width="4" height="4" fill="#17380c"/>
+
+        <!-- 前左足 (x=4..16, y=80..104) -->
+        <rect x="4" y="80" width="12" height="24" fill="#53b334"/>
+        <rect x="4" y="80" width="12" height="4" fill="#3c8723"/>
+        <rect x="8" y="88" width="4" height="8" fill="#68cf44"/>
+        <rect x="4" y="96" width="4" height="4" fill="#429427"/>
+        <!-- 爪部像素 -->
+        <rect x="4" y="100" width="4" height="4" fill="#1a3d10"/>
+        <rect x="12" y="100" width="4" height="4" fill="#1a3d10"/>
+
+        <!-- 前右足 (x=20..32, y=80..104) -->
+        <rect x="20" y="80" width="12" height="24" fill="#4ea830"/>
+        <rect x="20" y="80" width="12" height="4" fill="#388020"/>
+        <rect x="24" y="84" width="4" height="8" fill="#65c942"/>
+        <rect x="20" y="92" width="4" height="8" fill="#3e8c24"/>
+        <!-- 爪部像素 -->
+        <rect x="20" y="100" width="4" height="4" fill="#1a3d10"/>
+        <rect x="28" y="100" width="4" height="4" fill="#1a3d10"/>
+      </g>
+    </g>
+
+    <!-- 10. 底部 Minecraft HUD 经验条微动画 -->
+    <g>
+      <!-- 左侧悬浮绿色经验球 -->
+      <g class="xp-orb">
+        <rect x="192" y="243" width="8" height="8" fill="#4ade80"/>
+        <rect x="194" y="245" width="4" height="4" fill="#d9f99d"/>
+        <rect x="194" y="245" width="2" height="2" fill="#ffffff"/>
+      </g>
+      <!-- 右侧悬浮绿色经验球 -->
+      <g class="xp-orb-delay">
+        <rect x="800" y="243" width="8" height="8" fill="#4ade80"/>
+        <rect x="802" y="245" width="4" height="4" fill="#d9f99d"/>
+        <rect x="802" y="245" width="2" height="2" fill="#ffffff"/>
+      </g>
+
+      <!-- 经验条黑框与底槽 -->
+      <rect x="210" y="240" width="580" height="14" fill="#090e12"/>
+      <rect x="212" y="242" width="576" height="10" fill="#1a261d"/>
+      <rect x="212" y="242" width="576" height="2" fill="#111a14"/>
+
+      <!-- 经验条充能动画（局部坐标变换，避免扫光溢出未充能区域） -->
+      <g transform="translate(212, 242)">
+        <g class="xp-fill" clip-path="url(#xp-fill-local)">
+          <rect x="0" y="0" width="576" height="2" fill="#a3ff57"/>
+          <rect x="0" y="2" width="576" height="6" fill="#55ff55"/>
+          <rect x="0" y="8" width="576" height="2" fill="#2aa12a"/>
+          <!-- 扫过经验条的微光高光 -->
+          <rect x="0" y="0" width="36" height="10" fill="#ecfccb" class="xp-glint"/>
+        </g>
+      </g>
+
+      <!-- 18 格经典 Minecraft 经验条刻度分割线 -->
+      <g fill="#0b120e">
+        <rect x="244" y="242" width="2" height="10"/>
+        <rect x="276" y="242" width="2" height="10"/>
+        <rect x="308" y="242" width="2" height="10"/>
+        <rect x="340" y="242" width="2" height="10"/>
+        <rect x="372" y="242" width="2" height="10"/>
+        <rect x="404" y="242" width="2" height="10"/>
+        <rect x="436" y="242" width="2" height="10"/>
+        <rect x="468" y="242" width="2" height="10"/>
+        <rect x="500" y="242" width="2" height="10"/>
+        <rect x="532" y="242" width="2" height="10"/>
+        <rect x="564" y="242" width="2" height="10"/>
+        <rect x="596" y="242" width="2" height="10"/>
+        <rect x="628" y="242" width="2" height="10"/>
+        <rect x="660" y="242" width="2" height="10"/>
+        <rect x="692" y="242" width="2" height="10"/>
+        <rect x="724" y="242" width="2" height="10"/>
+        <rect x="756" y="242" width="2" height="10"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 极简深色像素边框（深浅主题皆清晰锐利） -->
+  <path d="M4,0 H996 V4 H1000 V256 H996 V260 H4 V256 H0 V4 H4 Z M4,4 V256 H996 V4 Z" fill="#0d1526" fill-rule="evenodd"/>
+  <rect x="4" y="4" width="992" height="2" fill="#1e2f52" opacity="0.6"/>
+</svg>
