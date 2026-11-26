@@ -1,0 +1,77 @@
+name: Minecraft Oak Sign Interaction
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: mc-guestbook-interact
+  cancel-in-progress: false
+
+jobs:
+  interact:
+    if: >-
+      github.event.issue.title == 'mc:diamond' ||
+      github.event.issue.title == 'mc:sign'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Process guestbook interaction and render Oak Sign SVGs
+        id: process
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+        run: node scripts/interact.mjs
+
+      - name: Commit and push updated Oak Sign
+        if: steps.process.outputs.handled == 'true'
+        env:
+          COMMIT_MSG: ${{ steps.process.outputs.commit_msg }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/guestbook.json assets/guestbook-zh.svg assets/guestbook-en.svg
+          if ! git diff --cached --quiet; then
+            git commit -m "$COMMIT_MSG"
+            git pull --rebase origin main
+            git push origin main
+          fi
+
+      - name: Reply and close issue
+        if: steps.process.outputs.handled == 'true'
+        uses: actions/github-script@v7
+        env:
+          REPLY_BODY: ${{ steps.process.outputs.reply_body }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: process.env.REPLY_BODY,
+            });
+            await github.rest.issues.update({
+              owner,
+              repo,
+              issue_number,
+              state: 'closed',
+              state_reason: 'completed',
+            });

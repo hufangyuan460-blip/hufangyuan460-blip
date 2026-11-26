@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 34" width="104" height="34" shape-rendering="crispEdges" role="img" aria-label="EN">
+  <path d="M2,0 H102 V2 H104 V32 H102 V34 H2 V32 H0 V2 H2 Z" fill="#0c1322"/>
+  <rect x="2" y="2" width="100" height="30" fill="#38465e"/>
+  <g fill="#263247">
+    <rect x="2" y="16" width="100" height="2"/>
+    <rect x="34" y="4" width="2" height="12"/>
+    <rect x="72" y="4" width="2" height="12"/>
+    <rect x="20" y="18" width="2" height="12"/>
+    <rect x="56" y="18" width="2" height="12"/>
+    <rect x="86" y="18" width="2" height="12"/>
+  </g>
+  <g fill="#495a78">
+    <rect x="10" y="8" width="6" height="4"/>
+    <rect x="44" y="10" width="8" height="4"/>
+    <rect x="80" y="8" width="8" height="4"/>
+    <rect x="28" y="22" width="8" height="4"/>
+    <rect x="66" y="20" width="8" height="4"/>
+  </g>
+  <rect x="2" y="2" width="100" height="2" fill="#67e8f9"/>
+  <rect x="2" y="4" width="100" height="2" fill="#38bdf8" opacity="0.55"/>
+  <rect x="2" y="2" width="2" height="28" fill="#38bdf8" opacity="0.7"/>
+  <rect x="2" y="30" width="100" height="2" fill="#1e293b"/>
+  <rect x="100" y="4" width="2" height="28" fill="#1e293b"/>
+  
+    <rect x="16" y="13" width="8" height="8" fill="#0e7490"/>
+    <rect x="18" y="11" width="4" height="12" fill="#22d3ee"/>
+    <rect x="14" y="15" width="12" height="4" fill="#22d3ee"/>
+    <rect x="18" y="15" width="4" height="4" fill="#e0f2fe"/>
+    <rect x="18" y="13" width="2" height="2" fill="#ffffff"/>
+  <text x="59.5" y="22.5" text-anchor="middle" fill="#070b14" font-family="'Courier New', Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="800" letter-spacing="2.5" shape-rendering="geometricPrecision">EN</text>
+  <text x="58" y="21" text-anchor="middle" fill="#ffffff" font-family="'Courier New', Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="800" letter-spacing="2.5" shape-rendering="geometricPrecision">EN</text>
+</svg>

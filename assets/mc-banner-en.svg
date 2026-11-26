@@ -1,0 +1,616 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 280" width="1000" height="280" shape-rendering="crispEdges" role="img" aria-label="FANGYUAN&#39;S WORLD — Exploring the Open-Source World...">
+  <title>FANGYUAN&#39;S WORLD — Exploring the Open-Source World...</title>
+
+  <defs>
+    <!-- 主标题与副标题（由 profile.config.json 自动生成） -->
+    <text id="hero-title" x="500" y="112" text-anchor="middle" class="pixel-title">FANGYUAN&#39;S WORLD</text>
+    <text id="hero-subtitle" x="500" y="156" text-anchor="middle" class="pixel-subtitle">Exploring the Open-Source World...</text>
+
+    <clipPath id="banner-clip">
+      <rect x="4" y="4" width="992" height="272"/>
+    </clipPath>
+    <clipPath id="xp-fill-local">
+      <rect x="0" y="0" width="576" height="10"/>
+    </clipPath>
+
+    <g id="clouds-far">
+      <rect x="148" y="24" width="88" height="4" fill="#2f498a"/>
+      <rect x="136" y="28" width="112" height="8" fill="#21356b"/>
+      <rect x="148" y="36" width="88" height="4" fill="#16244c"/>
+
+      <rect x="448" y="18" width="100" height="4" fill="#2f498a"/>
+      <rect x="436" y="22" width="124" height="8" fill="#21356b"/>
+      <rect x="452" y="30" width="92" height="4" fill="#16244c"/>
+
+      <rect x="748" y="28" width="84" height="4" fill="#2f498a"/>
+      <rect x="736" y="32" width="108" height="8" fill="#21356b"/>
+      <rect x="752" y="40" width="76" height="4" fill="#16244c"/>
+    </g>
+
+    <g id="clouds-near">
+      <rect x="236" y="46" width="68" height="4" fill="#3a59a3"/>
+      <rect x="224" y="50" width="92" height="8" fill="#28407d"/>
+      <rect x="232" y="58" width="76" height="4" fill="#1b2d5c"/>
+
+      <rect x="632" y="42" width="76" height="4" fill="#3a59a3"/>
+      <rect x="620" y="46" width="100" height="8" fill="#28407d"/>
+      <rect x="628" y="54" width="84" height="4" fill="#1b2d5c"/>
+
+      <rect x="892" y="164" width="56" height="4" fill="#2e4887"/>
+      <rect x="884" y="168" width="72" height="4" fill="#1f3263"/>
+    </g>
+
+    <g id="diamond-ore">
+      <rect x="0" y="0" width="28" height="20" fill="#3c424f"/>
+      <rect x="0" y="0" width="28" height="4" fill="#4b5363"/>
+      <rect x="4" y="16" width="20" height="4" fill="#2e333e"/>
+      <rect x="24" y="4" width="4" height="16" fill="#2e333e"/>
+      <rect x="4" y="4" width="8" height="4" fill="#06b6d4"/>
+      <rect x="4" y="8" width="4" height="4" fill="#22d3ee"/>
+      <rect x="16" y="8" width="8" height="4" fill="#06b6d4"/>
+      <rect x="20" y="4" width="4" height="4" fill="#22d3ee"/>
+      <rect x="12" y="12" width="8" height="4" fill="#22d3ee"/>
+      <g class="ore-glow">
+        <rect x="4" y="4" width="4" height="4" fill="#a5f3fc"/>
+        <rect x="16" y="8" width="4" height="4" fill="#67e8f9"/>
+        <rect x="12" y="12" width="4" height="4" fill="#ecfeff"/>
+      </g>
+    </g>
+
+    <g id="redstone-ore">
+      <rect x="0" y="0" width="28" height="20" fill="#3c424f"/>
+      <rect x="0" y="0" width="28" height="4" fill="#4b5363"/>
+      <rect x="4" y="16" width="20" height="4" fill="#2e333e"/>
+      <rect x="24" y="4" width="4" height="16" fill="#2e333e"/>
+      <rect x="4" y="8" width="8" height="4" fill="#dc2626"/>
+      <rect x="8" y="4" width="4" height="4" fill="#ef4444"/>
+      <rect x="16" y="4" width="8" height="4" fill="#dc2626"/>
+      <rect x="20" y="12" width="4" height="4" fill="#ef4444"/>
+      <rect x="12" y="12" width="4" height="4" fill="#ef4444"/>
+      <g class="ore-glow">
+        <rect x="8" y="4" width="4" height="4" fill="#fca5a5"/>
+        <rect x="4" y="8" width="4" height="4" fill="#f87171"/>
+        <rect x="20" y="12" width="4" height="4" fill="#fee2e2"/>
+      </g>
+    </g>
+  </defs>
+
+  <style>
+    .pixel-title {
+      font-family: 'Courier New', Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 5.5px;
+      shape-rendering: geometricPrecision;
+    }
+    .pixel-subtitle {
+      font-family: 'Courier New', Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      shape-rendering: geometricPrecision;
+    }
+
+    @keyframes twinkleA {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.22; }
+    }
+    @keyframes twinkleB {
+      0%, 100% { opacity: 0.28; }
+      50% { opacity: 1; }
+    }
+    @keyframes twinkleC {
+      0%, 100% { opacity: 0.85; }
+      40% { opacity: 0.15; }
+      72% { opacity: 0.95; }
+    }
+    .star-a { animation: twinkleA 2.5s steps(4, end) infinite; }
+    .star-b { animation: twinkleB 3.3s steps(4, end) infinite; }
+    .star-c { animation: twinkleC 4.1s steps(5, end) infinite; }
+
+    @keyframes shootingStar {
+      0%, 78% { transform: translate(0, 0); opacity: 0; }
+      82% { opacity: 0.95; }
+      94% { transform: translate(-120px, 44px); opacity: 0; }
+      100% { transform: translate(-120px, 44px); opacity: 0; }
+    }
+    .meteor { animation: shootingStar 11s linear infinite; }
+
+    @keyframes moonPulse {
+      0%, 100% { opacity: 0.13; }
+      50% { opacity: 0.23; }
+    }
+    .moon-halo { animation: moonPulse 5.5s ease-in-out infinite; }
+
+    @keyframes driftFar {
+      from { transform: translateX(0); }
+      to { transform: translateX(-1000px); }
+    }
+    @keyframes driftNear {
+      from { transform: translateX(0); }
+      to { transform: translateX(-1000px); }
+    }
+    .cloud-far { animation: driftFar 70s linear infinite; opacity: 0.62; }
+    .cloud-near { animation: driftNear 48s linear infinite; opacity: 0.54; }
+
+    @keyframes warmPulse {
+      0%, 100% { opacity: 0.22; }
+      50% { opacity: 0.48; }
+    }
+    .redstone-aura { animation: warmPulse 2.1s ease-in-out infinite; }
+    .lantern-aura { animation: warmPulse 3.2s ease-in-out 0.6s infinite; }
+    .redstone-dot { animation: twinkleA 1.8s steps(3, end) infinite; }
+
+    @keyframes oreShine {
+      0%, 100% { opacity: 0.32; }
+      50% { opacity: 1; }
+    }
+    .ore-glow { animation: oreShine 2.7s ease-in-out var(--ore-delay, 0s) infinite; }
+    .ore-1 { --ore-delay: 0s; }
+    .ore-2 { --ore-delay: 0.8s; }
+    .ore-3 { --ore-delay: 1.5s; }
+    .ore-4 { --ore-delay: 0.4s; }
+    .ore-5 { --ore-delay: 1.9s; }
+    .ore-6 { --ore-delay: 1.1s; }
+
+    @keyframes sparkRise {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 0.95; }
+      80% { opacity: 0.55; }
+      100% { transform: translateY(-18px); opacity: 0; }
+    }
+    .spark-1 { animation: sparkRise 3.1s steps(6, end) infinite; }
+    .spark-2 { animation: sparkRise 3.7s steps(6, end) 1.2s infinite; }
+    .spark-3 { animation: sparkRise 3.4s steps(6, end) 2.1s infinite; }
+    .spark-4 { animation: sparkRise 2.9s steps(6, end) 0.7s infinite; }
+
+    @keyframes fireflyA {
+      0%, 100% { transform: translate(0, 0); opacity: 0.35; }
+      50% { transform: translate(10px, -8px); opacity: 1; }
+    }
+    @keyframes fireflyB {
+      0%, 100% { transform: translate(0, 0); opacity: 0.85; }
+      50% { transform: translate(-12px, -6px); opacity: 0.25; }
+    }
+    .firefly-1 { animation: fireflyA 4.2s ease-in-out infinite; }
+    .firefly-2 { animation: fireflyB 5.1s ease-in-out 1.1s infinite; }
+    .firefly-3 { animation: fireflyA 4.6s ease-in-out 2.3s infinite; }
+
+    @keyframes creeperBreath {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    .creeper-body { animation: creeperBreath 3.2s steps(2, end) infinite; }
+
+    @keyframes xpFillBreath {
+      0%, 100% { transform: scaleX(0.76); }
+      50% { transform: scaleX(0.90); }
+    }
+    @keyframes xpGlintSweep {
+      0% { transform: translateX(-48px); opacity: 0; }
+      12% { opacity: 0.55; }
+      62% { opacity: 0.55; }
+      75% { transform: translateX(580px); opacity: 0; }
+      100% { transform: translateX(580px); opacity: 0; }
+    }
+    .xp-fill {
+      transform-origin: 0 0;
+      animation: xpFillBreath 6s ease-in-out infinite;
+    }
+    .xp-glint { animation: xpGlintSweep 4.6s linear infinite; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0); opacity: 0.85; }
+      50% { transform: translateY(-2px); opacity: 1; }
+    }
+    .xp-orb { animation: orbFloat 2.4s steps(2, end) infinite; }
+    .xp-orb-delay { animation: orbFloat 2.4s steps(2, end) 1.2s infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .star-a, .star-b, .star-c, .meteor, .moon-halo, .cloud-far, .cloud-near,
+      .redstone-aura, .lantern-aura, .redstone-dot, .ore-glow,
+      .spark-1, .spark-2, .spark-3, .spark-4,
+      .firefly-1, .firefly-2, .firefly-3,
+      .creeper-body, .xp-fill, .xp-glint, .xp-orb, .xp-orb-delay {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <g clip-path="url(#banner-clip)">
+    <!-- 1. 多层阶梯深蓝像素夜空 -->
+    <rect x="0" y="0" width="1000" height="36" fill="#050814"/>
+    <rect x="0" y="36" width="1000" height="36" fill="#080e22"/>
+    <rect x="0" y="72" width="1000" height="40" fill="#0c1532"/>
+    <rect x="0" y="112" width="1000" height="36" fill="#111e45"/>
+    <rect x="0" y="148" width="1000" height="32" fill="#172959"/>
+    <rect x="0" y="180" width="1000" height="24" fill="#1e3570"/>
+    <rect x="0" y="204" width="1000" height="24" fill="#244282"/>
+
+    <g fill="#080e22">
+      <rect x="160" y="32" width="4" height="4"/><rect x="312" y="32" width="4" height="4"/>
+      <rect x="492" y="32" width="4" height="4"/><rect x="688" y="32" width="4" height="4"/>
+      <rect x="852" y="32" width="4" height="4"/>
+    </g>
+    <g fill="#111e45">
+      <rect x="116" y="108" width="4" height="4"/><rect x="256" y="108" width="4" height="4"/>
+      <rect x="752" y="108" width="4" height="4"/><rect x="912" y="108" width="4" height="4"/>
+    </g>
+    <g fill="#1e3570">
+      <rect x="200" y="176" width="4" height="4"/><rect x="380" y="176" width="4" height="4"/>
+      <rect x="620" y="176" width="4" height="4"/><rect x="780" y="176" width="4" height="4"/>
+    </g>
+
+    <!-- 2. 经典方形 Minecraft 月亮 -->
+    <g>
+      <rect x="48" y="8" width="84" height="84" fill="#60a5fa" opacity="0.05"/>
+      <rect x="58" y="18" width="64" height="64" fill="#93c5fd" class="moon-halo"/>
+      <rect x="68" y="28" width="44" height="44" fill="#e2e8f0"/>
+      <rect x="68" y="28" width="44" height="4" fill="#ffffff"/>
+      <rect x="68" y="28" width="4" height="44" fill="#f8fafc"/>
+      <rect x="76" y="36" width="8" height="8" fill="#cbd5e1"/>
+      <rect x="80" y="40" width="4" height="4" fill="#94a3b8"/>
+      <rect x="100" y="36" width="4" height="8" fill="#cbd5e1"/>
+      <rect x="88" y="54" width="12" height="8" fill="#cbd5e1"/>
+      <rect x="92" y="58" width="4" height="4" fill="#94a3b8"/>
+      <rect x="74" y="60" width="8" height="4" fill="#cbd5e1"/>
+    </g>
+
+    <!-- 3. 星光与流星 -->
+    <g class="meteor">
+      <rect x="916" y="24" width="4" height="4" fill="#ffffff"/>
+      <rect x="920" y="22" width="4" height="2" fill="#bae6fd"/>
+      <rect x="924" y="20" width="6" height="2" fill="#38bdf8" opacity="0.7"/>
+      <rect x="930" y="18" width="8" height="2" fill="#38bdf8" opacity="0.35"/>
+    </g>
+
+    <g class="star-a">
+      <rect x="164" y="16" width="4" height="4" fill="#f8fafc"/>
+      <rect x="304" y="24" width="4" height="4" fill="#bae6fd"/>
+      <rect x="412" y="16" width="4" height="4" fill="#fef08a"/>
+      <rect x="596" y="20" width="4" height="4" fill="#f8fafc"/>
+      <rect x="788" y="20" width="4" height="4" fill="#bae6fd"/>
+      <rect x="944" y="32" width="4" height="4" fill="#f8fafc"/>
+      <rect x="204" y="96" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="768" y="96" width="4" height="4" fill="#fef08a"/>
+      <rect x="236" y="40" width="2" height="6" fill="#e0f2fe"/>
+      <rect x="234" y="42" width="6" height="2" fill="#e0f2fe"/>
+      <rect x="236" y="42" width="2" height="2" fill="#ffffff"/>
+    </g>
+    <g class="star-b">
+      <rect x="144" y="56" width="4" height="4" fill="#93c5fd"/>
+      <rect x="276" y="52" width="2" height="2" fill="#f8fafc"/>
+      <rect x="364" y="44" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="516" y="14" width="4" height="4" fill="#bae6fd"/>
+      <rect x="664" y="32" width="4" height="4" fill="#f8fafc"/>
+      <rect x="728" y="56" width="2" height="2" fill="#bae6fd"/>
+      <rect x="856" y="16" width="4" height="4" fill="#fef08a"/>
+      <rect x="960" y="64" width="4" height="4" fill="#bae6fd"/>
+      <rect x="28" y="104" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="172" y="136" width="2" height="2" fill="#93c5fd"/>
+      <rect x="814" y="56" width="2" height="6" fill="#fef08a"/>
+      <rect x="812" y="58" width="6" height="2" fill="#fef08a"/>
+      <rect x="814" y="58" width="2" height="2" fill="#ffffff"/>
+    </g>
+    <g class="star-c">
+      <rect x="20" y="32" width="4" height="4" fill="#93c5fd"/>
+      <rect x="204" y="28" width="2" height="2" fill="#f8fafc"/>
+      <rect x="468" y="40" width="2" height="2" fill="#bae6fd"/>
+      <rect x="560" y="46" width="2" height="2" fill="#e0f2fe"/>
+      <rect x="700" y="16" width="4" height="4" fill="#93c5fd"/>
+      <rect x="900" y="44" width="4" height="4" fill="#e0f2fe"/>
+      <rect x="920" y="108" width="4" height="4" fill="#93c5fd"/>
+      <rect x="148" y="92" width="2" height="2" fill="#f8fafc"/>
+      <rect x="784" y="136" width="2" height="2" fill="#bae6fd"/>
+    </g>
+
+    <!-- 4. 双层视差像素云 -->
+    <g class="cloud-far">
+      <use href="#clouds-far" x="0"/>
+      <use href="#clouds-far" x="1000"/>
+    </g>
+    <g class="cloud-near">
+      <use href="#clouds-near" x="0"/>
+      <use href="#clouds-near" x="1000"/>
+    </g>
+
+    <!-- 5. 远山剪影 -->
+    <g fill="#0a132b">
+      <rect x="0" y="168" width="84" height="48"/>
+      <rect x="48" y="156" width="56" height="60"/>
+      <rect x="104" y="172" width="76" height="44"/>
+      <rect x="820" y="172" width="84" height="44"/>
+      <rect x="896" y="152" width="104" height="64"/>
+    </g>
+    <g fill="#0f1c3f">
+      <rect x="0" y="180" width="60" height="36"/>
+      <rect x="24" y="168" width="44" height="48"/>
+      <rect x="60" y="176" width="56" height="40"/>
+      <rect x="116" y="188" width="64" height="28"/>
+      <rect x="180" y="200" width="44" height="16"/>
+      <rect x="760" y="200" width="44" height="16"/>
+      <rect x="804" y="188" width="60" height="28"/>
+      <rect x="864" y="176" width="64" height="40"/>
+      <rect x="928" y="164" width="72" height="52"/>
+    </g>
+    <g fill="#223b7a">
+      <rect x="24" y="168" width="44" height="4"/>
+      <rect x="60" y="176" width="56" height="4"/>
+      <rect x="116" y="188" width="64" height="4"/>
+      <rect x="864" y="176" width="64" height="4"/>
+      <rect x="928" y="164" width="72" height="4"/>
+    </g>
+
+    <!-- 6. 左侧像素橡树 + 暖光灯笼 + 红石火把 -->
+    <g>
+      <rect x="48" y="168" width="16" height="36" fill="#523722"/>
+      <rect x="48" y="168" width="4" height="36" fill="#6b492e"/>
+      <rect x="60" y="168" width="4" height="36" fill="#3a2516"/>
+      <rect x="52" y="180" width="4" height="8" fill="#3a2516"/>
+      <rect x="24" y="140" width="64" height="28" fill="#1a522a"/>
+      <rect x="32" y="128" width="48" height="12" fill="#236b38"/>
+      <rect x="44" y="120" width="24" height="8" fill="#2d8546"/>
+      <rect x="28" y="144" width="12" height="8" fill="#27753e"/>
+      <rect x="52" y="132" width="12" height="8" fill="#349450"/>
+      <rect x="72" y="148" width="16" height="16" fill="#123a1d"/>
+      <rect x="40" y="160" width="12" height="8" fill="#123a1d"/>
+      <rect x="24" y="156" width="12" height="12" fill="#123a1d"/>
+
+      <rect x="68" y="164" width="28" height="28" fill="#f59e0b" class="lantern-aura"/>
+      <rect x="80" y="168" width="4" height="4" fill="#64748b"/>
+      <rect x="78" y="172" width="8" height="10" fill="#334155"/>
+      <rect x="80" y="174" width="4" height="6" fill="#fde047"/>
+      <rect x="80" y="176" width="2" height="2" fill="#ffffff"/>
+    </g>
+
+    <g>
+      <rect x="120" y="176" width="28" height="28" fill="#ef4444" class="redstone-aura"/>
+      <rect x="126" y="182" width="16" height="16" fill="#f87171" opacity="0.28"/>
+      <rect x="132" y="192" width="4" height="12" fill="#7c5434"/>
+      <rect x="132" y="200" width="4" height="4" fill="#593b22"/>
+      <rect x="132" y="188" width="4" height="4" fill="#ef4444"/>
+      <rect x="133" y="189" width="2" height="2" fill="#fecaca"/>
+      <rect x="128" y="180" width="2" height="2" fill="#f87171" class="spark-2"/>
+      <rect x="138" y="184" width="2" height="2" fill="#fca5a5" class="spark-1"/>
+    </g>
+
+    <!-- 7. 中央复古像素标题与副标题 -->
+    <g>
+      <use href="#hero-title" x="4" y="4" fill="#040712"/>
+      <use href="#hero-title" x="2" y="2" fill="#23396b"/>
+      <use href="#hero-title" x="0" y="0" fill="#f8fafc"/>
+
+      <rect x="336" y="128" width="144" height="2" fill="#274073"/>
+      <rect x="520" y="128" width="144" height="2" fill="#274073"/>
+      <rect x="388" y="128" width="92" height="2" fill="#38bdf8" opacity="0.5"/>
+      <rect x="520" y="128" width="92" height="2" fill="#38bdf8" opacity="0.5"/>
+      <rect x="498" y="123" width="4" height="12" fill="#38bdf8"/>
+      <rect x="494" y="127" width="12" height="4" fill="#38bdf8"/>
+      <rect x="498" y="127" width="4" height="4" fill="#ecfeff"/>
+      <rect x="484" y="127" width="4" height="4" fill="#ef4444" class="redstone-dot"/>
+      <rect x="512" y="127" width="4" height="4" fill="#ef4444" class="redstone-dot"/>
+
+      <use href="#hero-subtitle" x="2" y="2" fill="#040712"/>
+      <use href="#hero-subtitle" x="0" y="0" fill="#7dd3fc"/>
+    </g>
+
+    <!-- 8. 底部草方块 / 泥土 / 深层石头横截面地形 -->
+    <rect x="0" y="232" width="1000" height="48" fill="#3b414d"/>
+    <g fill="#2f343f">
+      <rect x="12" y="236" width="16" height="8"/><rect x="104" y="244" width="20" height="8"/>
+      <rect x="220" y="236" width="24" height="8"/><rect x="388" y="240" width="20" height="8"/>
+      <rect x="484" y="236" width="28" height="8"/><rect x="584" y="240" width="24" height="8"/>
+      <rect x="720" y="236" width="24" height="8"/><rect x="824" y="244" width="24" height="8"/>
+      <rect x="944" y="236" width="24" height="8"/><rect x="140" y="260" width="24" height="8"/>
+      <rect x="852" y="264" width="24" height="8"/><rect x="928" y="260" width="28" height="8"/>
+    </g>
+    <g fill="#4c5362">
+      <rect x="36" y="248" width="12" height="4"/><rect x="128" y="236" width="16" height="4"/>
+      <rect x="272" y="240" width="16" height="4"/><rect x="436" y="236" width="20" height="4"/>
+      <rect x="540" y="236" width="16" height="4"/><rect x="688" y="240" width="16" height="4"/>
+      <rect x="796" y="236" width="16" height="4"/><rect x="920" y="240" width="16" height="4"/>
+      <rect x="20" y="264" width="20" height="4"/><rect x="804" y="260" width="16" height="4"/>
+    </g>
+
+    <rect x="0" y="212" width="164" height="24" fill="#6e4b2e"/>
+    <rect x="164" y="224" width="628" height="8" fill="#6e4b2e"/>
+    <rect x="792" y="212" width="208" height="24" fill="#6e4b2e"/>
+    <g fill="#593b22">
+      <rect x="16" y="220" width="8" height="4"/><rect x="48" y="228" width="12" height="4"/>
+      <rect x="92" y="220" width="8" height="8"/><rect x="136" y="228" width="12" height="4"/>
+      <rect x="184" y="228" width="12" height="4"/><rect x="252" y="228" width="8" height="4"/>
+      <rect x="316" y="228" width="12" height="4"/><rect x="404" y="228" width="12" height="4"/>
+      <rect x="476" y="228" width="12" height="4"/><rect x="564" y="228" width="12" height="4"/>
+      <rect x="636" y="228" width="12" height="4"/><rect x="724" y="228" width="12" height="4"/>
+      <rect x="816" y="220" width="12" height="4"/><rect x="876" y="228" width="12" height="4"/>
+      <rect x="944" y="220" width="12" height="4"/><rect x="976" y="228" width="8" height="4"/>
+    </g>
+    <g fill="#845c3b">
+      <rect x="32" y="224" width="8" height="4"/><rect x="112" y="224" width="8" height="4"/>
+      <rect x="220" y="228" width="8" height="4"/><rect x="360" y="228" width="8" height="4"/>
+      <rect x="520" y="228" width="8" height="4"/><rect x="684" y="228" width="8" height="4"/>
+      <rect x="844" y="224" width="8" height="4"/><rect x="920" y="228" width="8" height="4"/>
+    </g>
+
+    <rect x="0" y="204" width="164" height="8" fill="#52a32b"/>
+    <rect x="0" y="204" width="164" height="4" fill="#63ba38"/>
+    <g fill="#76d147">
+      <rect x="20" y="204" width="12" height="4"/><rect x="76" y="204" width="16" height="4"/>
+      <rect x="128" y="204" width="12" height="4"/>
+    </g>
+    <g fill="#428a21">
+      <rect x="8" y="212" width="8" height="4"/><rect x="32" y="212" width="4" height="8"/>
+      <rect x="64" y="212" width="12" height="4"/><rect x="108" y="212" width="8" height="4"/>
+      <rect x="148" y="212" width="8" height="8"/>
+    </g>
+
+    <rect x="164" y="216" width="628" height="8" fill="#52a32b"/>
+    <rect x="164" y="216" width="628" height="4" fill="#63ba38"/>
+    <g fill="#76d147">
+      <rect x="180" y="216" width="16" height="4"/><rect x="244" y="216" width="12" height="4"/>
+      <rect x="320" y="216" width="20" height="4"/><rect x="408" y="216" width="16" height="4"/>
+      <rect x="492" y="216" width="20" height="4"/><rect x="584" y="216" width="16" height="4"/>
+      <rect x="672" y="216" width="16" height="4"/><rect x="748" y="216" width="16" height="4"/>
+    </g>
+    <g fill="#428a21">
+      <rect x="172" y="224" width="8" height="4"/><rect x="208" y="224" width="12" height="4"/>
+      <rect x="260" y="224" width="8" height="4"/><rect x="296" y="224" width="4" height="8"/>
+      <rect x="344" y="224" width="12" height="4"/><rect x="392" y="224" width="8" height="4"/>
+      <rect x="440" y="224" width="12" height="4"/><rect x="500" y="224" width="8" height="4"/>
+      <rect x="548" y="224" width="12" height="4"/><rect x="604" y="224" width="8" height="4"/>
+      <rect x="656" y="224" width="12" height="4"/><rect x="712" y="224" width="8" height="4"/>
+      <rect x="764" y="224" width="12" height="4"/>
+    </g>
+
+    <rect x="792" y="204" width="208" height="8" fill="#52a32b"/>
+    <rect x="792" y="204" width="208" height="4" fill="#63ba38"/>
+    <g fill="#76d147">
+      <rect x="804" y="204" width="16" height="4"/><rect x="876" y="204" width="16" height="4"/>
+      <rect x="944" y="204" width="20" height="4"/>
+    </g>
+    <g fill="#428a21">
+      <rect x="796" y="212" width="8" height="8"/><rect x="828" y="212" width="12" height="4"/>
+      <rect x="868" y="212" width="8" height="4"/><rect x="908" y="212" width="12" height="4"/>
+      <rect x="952" y="212" width="8" height="8"/><rect x="984" y="212" width="8" height="4"/>
+    </g>
+
+    <!-- 发光钻石矿 + 红石矿 -->
+    <g class="ore-1"><use href="#diamond-ore" x="48" y="244"/></g>
+    <g class="ore-2"><use href="#redstone-ore" x="148" y="248"/></g>
+    <g class="ore-3"><use href="#diamond-ore" x="316" y="234"/></g>
+    <g class="ore-4"><use href="#redstone-ore" x="486" y="234"/></g>
+    <g class="ore-5"><use href="#diamond-ore" x="652" y="234"/></g>
+    <g class="ore-6"><use href="#redstone-ore" x="884" y="244"/></g>
+    <g class="ore-3"><use href="#diamond-ore" x="936" y="248"/></g>
+
+    <rect x="60" y="240" width="2" height="2" fill="#67e8f9" class="spark-1"/>
+    <rect x="160" y="244" width="2" height="2" fill="#fca5a5" class="spark-4"/>
+    <rect x="330" y="232" width="2" height="2" fill="#a5f3fc" class="spark-2"/>
+    <rect x="500" y="232" width="2" height="2" fill="#f87171" class="spark-3"/>
+    <rect x="898" y="240" width="2" height="2" fill="#fca5a5" class="spark-2"/>
+    <rect x="948" y="244" width="2" height="2" fill="#67e8f9" class="spark-1"/>
+
+    <g>
+      <rect x="220" y="208" width="4" height="8" fill="#3a7a1d"/>
+      <rect x="220" y="204" width="4" height="4" fill="#38bdf8"/>
+      <rect x="264" y="210" width="4" height="6" fill="#3a7a1d"/>
+      <rect x="264" y="206" width="4" height="4" fill="#f43f5e"/>
+      <rect x="736" y="208" width="4" height="8" fill="#3a7a1d"/>
+      <rect x="736" y="204" width="4" height="4" fill="#facc15"/>
+    </g>
+    <g>
+      <rect x="292" y="192" width="3" height="3" fill="#fef08a" class="firefly-1"/>
+      <rect x="712" y="186" width="3" height="3" fill="#a3e635" class="firefly-2"/>
+      <rect x="796" y="164" width="3" height="3" fill="#fef08a" class="firefly-3"/>
+    </g>
+
+    <!-- 9. 精致 2.5D 像素苦力怕 -->
+    <rect x="832" y="204" width="52" height="4" fill="#1b3d12" opacity="0.62"/>
+    <g transform="translate(836, 100)">
+      <g class="creeper-body">
+        <rect x="4" y="0" width="32" height="32" fill="#53b334"/>
+        <rect x="4" y="0" width="8" height="4" fill="#68cf44"/>
+        <rect x="16" y="0" width="8" height="8" fill="#469e2a"/>
+        <rect x="28" y="0" width="8" height="4" fill="#7be055"/>
+        <rect x="4" y="4" width="4" height="8" fill="#469e2a"/>
+        <rect x="12" y="4" width="4" height="4" fill="#7be055"/>
+        <rect x="24" y="4" width="4" height="4" fill="#68cf44"/>
+        <rect x="32" y="8" width="4" height="8" fill="#469e2a"/>
+        <rect x="4" y="16" width="4" height="8" fill="#68cf44"/>
+        <rect x="8" y="16" width="4" height="4" fill="#469e2a"/>
+        <rect x="28" y="16" width="4" height="8" fill="#7be055"/>
+        <rect x="4" y="24" width="8" height="8" fill="#469e2a"/>
+        <rect x="16" y="28" width="8" height="4" fill="#68cf44"/>
+        <rect x="28" y="24" width="8" height="8" fill="#469e2a"/>
+        <rect x="36" y="0" width="8" height="32" fill="#377d20"/>
+        <rect x="36" y="4" width="4" height="8" fill="#2e6b1b"/>
+        <rect x="40" y="12" width="4" height="8" fill="#419126"/>
+        <rect x="36" y="24" width="8" height="4" fill="#2e6b1b"/>
+        <rect x="8" y="8" width="8" height="8" fill="#090f09"/>
+        <rect x="24" y="8" width="8" height="8" fill="#090f09"/>
+        <rect x="16" y="16" width="8" height="4" fill="#090f09"/>
+        <rect x="12" y="20" width="16" height="8" fill="#090f09"/>
+        <rect x="12" y="28" width="4" height="4" fill="#090f09"/>
+        <rect x="24" y="28" width="4" height="4" fill="#090f09"/>
+
+        <rect x="8" y="32" width="24" height="48" fill="#50ad31"/>
+        <rect x="8" y="32" width="24" height="4" fill="#31701c"/>
+        <rect x="12" y="36" width="8" height="8" fill="#65c942"/>
+        <rect x="24" y="40" width="8" height="8" fill="#429427"/>
+        <rect x="8" y="44" width="8" height="12" fill="#429427"/>
+        <rect x="16" y="48" width="8" height="8" fill="#77db53"/>
+        <rect x="12" y="56" width="8" height="8" fill="#429427"/>
+        <rect x="24" y="56" width="8" height="8" fill="#65c942"/>
+        <rect x="8" y="64" width="8" height="8" fill="#65c942"/>
+        <rect x="20" y="64" width="8" height="12" fill="#429427"/>
+        <rect x="12" y="72" width="8" height="8" fill="#3a8522"/>
+        <rect x="32" y="32" width="8" height="48" fill="#35781e"/>
+        <rect x="32" y="32" width="8" height="4" fill="#275c15"/>
+        <rect x="32" y="44" width="4" height="8" fill="#2c6619"/>
+        <rect x="36" y="56" width="4" height="12" fill="#3f8f24"/>
+        <rect x="32" y="72" width="8" height="8" fill="#2c6619"/>
+
+        <rect x="32" y="80" width="12" height="20" fill="#2d691a"/>
+        <rect x="36" y="84" width="4" height="8" fill="#245414"/>
+        <rect x="32" y="96" width="4" height="4" fill="#17380c"/>
+        <rect x="40" y="96" width="4" height="4" fill="#17380c"/>
+
+        <rect x="4" y="80" width="12" height="24" fill="#53b334"/>
+        <rect x="4" y="80" width="12" height="4" fill="#3c8723"/>
+        <rect x="8" y="88" width="4" height="8" fill="#68cf44"/>
+        <rect x="4" y="96" width="4" height="4" fill="#429427"/>
+        <rect x="4" y="100" width="4" height="4" fill="#1a3d10"/>
+        <rect x="12" y="100" width="4" height="4" fill="#1a3d10"/>
+
+        <rect x="20" y="80" width="12" height="24" fill="#4ea830"/>
+        <rect x="20" y="80" width="12" height="4" fill="#388020"/>
+        <rect x="24" y="84" width="4" height="8" fill="#65c942"/>
+        <rect x="20" y="92" width="4" height="8" fill="#3e8c24"/>
+        <rect x="20" y="100" width="4" height="4" fill="#1a3d10"/>
+        <rect x="28" y="100" width="4" height="4" fill="#1a3d10"/>
+      </g>
+    </g>
+
+    <!-- 10. 底部 Minecraft HUD 经验条 -->
+    <g>
+      <g class="xp-orb">
+        <rect x="192" y="259" width="8" height="8" fill="#4ade80"/>
+        <rect x="194" y="261" width="4" height="4" fill="#d9f99d"/>
+        <rect x="194" y="261" width="2" height="2" fill="#ffffff"/>
+      </g>
+      <g class="xp-orb-delay">
+        <rect x="800" y="259" width="8" height="8" fill="#4ade80"/>
+        <rect x="802" y="261" width="4" height="4" fill="#d9f99d"/>
+        <rect x="802" y="261" width="2" height="2" fill="#ffffff"/>
+      </g>
+
+      <rect x="210" y="256" width="580" height="14" fill="#090e12"/>
+      <rect x="212" y="258" width="576" height="10" fill="#1a261d"/>
+      <rect x="212" y="258" width="576" height="2" fill="#111a14"/>
+
+      <g transform="translate(212, 258)">
+        <g class="xp-fill" clip-path="url(#xp-fill-local)">
+          <rect x="0" y="0" width="576" height="2" fill="#a3ff57"/>
+          <rect x="0" y="2" width="576" height="6" fill="#55ff55"/>
+          <rect x="0" y="8" width="576" height="2" fill="#2aa12a"/>
+          <rect x="0" y="0" width="36" height="10" fill="#ecfccb" class="xp-glint"/>
+        </g>
+      </g>
+
+      <g fill="#0b120e">
+        <rect x="244" y="258" width="2" height="10"/><rect x="276" y="258" width="2" height="10"/>
+        <rect x="308" y="258" width="2" height="10"/><rect x="340" y="258" width="2" height="10"/>
+        <rect x="372" y="258" width="2" height="10"/><rect x="404" y="258" width="2" height="10"/>
+        <rect x="436" y="258" width="2" height="10"/><rect x="468" y="258" width="2" height="10"/>
+        <rect x="500" y="258" width="2" height="10"/><rect x="532" y="258" width="2" height="10"/>
+        <rect x="564" y="258" width="2" height="10"/><rect x="596" y="258" width="2" height="10"/>
+        <rect x="628" y="258" width="2" height="10"/><rect x="660" y="258" width="2" height="10"/>
+        <rect x="692" y="258" width="2" height="10"/><rect x="724" y="258" width="2" height="10"/>
+        <rect x="756" y="258" width="2" height="10"/>
+      </g>
+    </g>
+  </g>
+
+  <path d="M4,0 H996 V4 H1000 V276 H996 V280 H4 V276 H0 V4 H4 Z M4,4 V276 H996 V4 Z" fill="#0d1526" fill-rule="evenodd"/>
+  <rect x="4" y="4" width="992" height="2" fill="#1e2f52" opacity="0.65"/>
+</svg>

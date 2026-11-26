@@ -1,0 +1,52 @@
+{
+  "username": "hufangyuan460-blip",
+  "repo": "hufangyuan460-blip",
+  "banner": {
+    "title": "FANGYUAN'S WORLD",
+    "subtitle": {
+      "zh": "探索开源世界中...",
+      "en": "Exploring the Open-Source World..."
+    }
+  },
+  "hotbar": {
+    "activeSlot": 0,
+    "showHudStats": true,
+    "items": [
+      {
+        "icon": "diamond_pickaxe",
+        "label": { "zh": "代码", "en": "Code" },
+        "enchanted": true
+      },
+      {
+        "icon": "ender_pearl",
+        "label": { "zh": "AI", "en": "AI" },
+        "enchanted": true
+      },
+      {
+        "icon": "nether_star",
+        "label": { "zh": "动画", "en": "Motion" },
+        "enchanted": true
+      },
+      {
+        "icon": "crafting_table",
+        "label": { "zh": "开源", "en": "OSS" }
+      }
+    ]
+  },
+  "guestbook": {
+    "dataFile": "data/guestbook.json",
+    "maxDisplay": 4,
+    "maxMessageLength": 36
+  },
+  "snake": {
+    "branch": "output",
+    "dark": {
+      "snake": "55FF55",
+      "dots": "1e1b18,2d5a27,55aa55,38bdf8,facc15"
+    },
+    "light": {
+      "snake": "2e7d32",
+      "dots": "e7e5e4,86efac,22c55e,0ea5e9,eab308"
+    }
+  }
+}
