@@ -1653,8 +1653,24 @@ function generateReadme(lang) {
 `;
 }
 
+function encodeSnkColor(hex) {
+  const clean = String(hex).trim().replace(/^(%23|#)/i, '');
+  return `%23${clean}`;
+}
+
+function encodeSnkDots(dots) {
+  return String(dots)
+    .split(',')
+    .map((c) => encodeSnkColor(c))
+    .join(',');
+}
+
 function generateWorkflow() {
   const { branch, dark, light } = config.snake;
+  const darkSnake = encodeSnkColor(dark.snake);
+  const darkDots = encodeSnkDots(dark.dots);
+  const lightSnake = encodeSnkColor(light.snake);
+  const lightDots = encodeSnkDots(light.dots);
   return `name: Generate Minecraft Contribution Snake
 
 on:
@@ -1676,8 +1692,8 @@ jobs:
         with:
           github_user_name: \${{ github.repository_owner }}
           outputs: |
-            dist/mc-snake-dark.svg?color_snake=${dark.snake}&color_dots=${dark.dots}
-            dist/mc-snake-light.svg?color_snake=${light.snake}&color_dots=${light.dots}
+            dist/mc-snake-dark.svg?palette=github-dark&color_snake=${darkSnake}&color_dots=${darkDots}
+            dist/mc-snake-light.svg?palette=github-light&color_snake=${lightSnake}&color_dots=${lightDots}
 
       - name: Push snake SVGs to ${branch} branch
         uses: crazy-max/ghaction-github-pages@v4
