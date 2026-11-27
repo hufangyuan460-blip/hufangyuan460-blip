@@ -33,6 +33,13 @@
       }
     ]
   },
+  "portal": {
+    "url": "https://hufangyuan460-blip.github.io",
+    "label": {
+      "zh": "穿过传送门 · 进入 3D 方块世界",
+      "en": "ENTER PORTAL · 3D BLOCK WORLD"
+    }
+  },
   "guestbook": {
     "dataFile": "data/guestbook.json",
     "maxDisplay": 4,

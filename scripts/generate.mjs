@@ -1415,6 +1415,485 @@ function generateHotbar({ items, activeSlot = 0, showHudStats = true, lang }) {
 }
 
 // ============================================================================
+// 5.5. Animated Minecraft Nether Portal Button SVG (1000 x 116)
+// ============================================================================
+const MINI_BLOCK_3D = {
+  palette: {
+    K: '#090314',
+    G: '#63ba38',
+    H: '#86efac',
+    L: '#4d9926',
+    M: '#3b7d1e',
+    D: '#7c5332',
+    B: '#5c3c22',
+    S: '#422916',
+    P: '#e879f9',
+  },
+  grid: [
+    '......KKKK......',
+    '....KKGHHGKK....',
+    '..KKGGHHHHGGKK..',
+    '.KGHHGGGGGGHHGK.',
+    'KGGHGGGGGGGGHGGK',
+    'KLLGGGGGGGGGGMMK',
+    'KLLKKGGGGGGKKMMK',
+    'KDLDDKKKKKKBMBBK',
+    'KDDDDDDKKBBBBBBK',
+    'KDDBDDDKKBBBSBBK',
+    'KDDDDDDKKBSBBBBK',
+    'KDDDBDDKKBBBBBSK',
+    '.KKDDDDKKBBBBKK.',
+    '...KKDDKKBBKK...',
+    '.....KKKKKK.....',
+    '................',
+  ],
+};
+
+const OBSIDIAN_A = {
+  palette: {
+    A: '#0b0614',
+    B: '#120a21',
+    C: '#1c1033',
+    D: '#2b184d',
+    E: '#3f2370',
+    F: '#583299',
+  },
+  grid: [
+    'CDCCBCBB',
+    'CBABDCBC',
+    'BAEDCBBA',
+    'BCCFBCCB',
+    'ABCCBDCA',
+    'CDECBABB',
+    'BBACDCBA',
+    'AABAABBA',
+  ],
+};
+
+const OBSIDIAN_B = {
+  palette: {
+    A: '#0b0614',
+    B: '#120a21',
+    C: '#1c1033',
+    D: '#2b184d',
+    E: '#3f2370',
+    F: '#583299',
+  },
+  grid: [
+    'CCBCDBCC',
+    'BADCBCBB',
+    'CCBFCCAB',
+    'BDECBBCA',
+    'BACCDCCB',
+    'BBABECDB',
+    'ACDCBBAA',
+    'BAABABAA',
+  ],
+};
+
+const CRYING_OBSIDIAN = {
+  palette: {
+    A: '#0b0614',
+    B: '#140b24',
+    C: '#241342',
+    D: '#3b1e6e',
+    P: '#a855f7',
+    L: '#e879f9',
+    W: '#fae8ff',
+  },
+  grid: [
+    'CCDCBDCC',
+    'BPLCBDCB',
+    'CPWPLCCB',
+    'BDPLCPDB',
+    'CBCCPLCC',
+    'BCDPWPCB',
+    'BBCPPLBA',
+    'AABBBAAA',
+  ],
+};
+
+export function generatePortal({ label, lang }) {
+  const isZh = lang === 'zh';
+  const uiFont = isZh
+    ? "'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', 'WenQuanYi Micro Hei', sans-serif"
+    : "'Courier New', Consolas, 'Liberation Mono', monospace";
+  const fontSize = isZh ? 19 : 16.5;
+  const letterSpacing = isZh ? 2.4 : 1.8;
+
+  // Build 48x6 obsidian frame (16px blocks -> x=116..884, y=10..106)
+  const obsidianTiles = [];
+  const cols = 48;
+  const rows = 6;
+  const startX = 116;
+  const startY = 10;
+  const tileSize = 16;
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const isEdge = r === 0 || r === rows - 1 || c === 0 || c === cols - 1;
+      if (!isEdge) continue;
+      const isCorner = (r === 0 || r === rows - 1) && (c === 0 || c === cols - 1);
+      const id = isCorner
+        ? '#crying-obsidian'
+        : (r * 7 + c * 3) % 2 === 0
+          ? '#obsidian-a'
+          : '#obsidian-b';
+      obsidianTiles.push(`<use href="${id}" x="${startX + c * tileSize}" y="${startY + r * tileSize}"/>`);
+    }
+  }
+
+  const blockIconSvg = renderPixelGrid(MINI_BLOCK_3D.grid, MINI_BLOCK_3D.palette, 0, 0, 2);
+  const obsASvg = renderPixelGrid(OBSIDIAN_A.grid, OBSIDIAN_A.palette, 0, 0, 2);
+  const obsBSvg = renderPixelGrid(OBSIDIAN_B.grid, OBSIDIAN_B.palette, 0, 0, 2);
+  const cryObsSvg = renderPixelGrid(CRYING_OBSIDIAN.grid, CRYING_OBSIDIAN.palette, 0, 0, 2);
+
+  // Seamless 368px pixel vortex ripple pattern (tiled 3x across 736px portal interior)
+  const rippleTileA = `
+    <rect x="8" y="4" width="24" height="8" fill="#7e22ce" opacity="0.55"/>
+    <rect x="24" y="12" width="32" height="8" fill="#9333ea" opacity="0.5"/>
+    <rect x="48" y="20" width="24" height="12" fill="#a855f7" opacity="0.42"/>
+    <rect x="16" y="36" width="36" height="8" fill="#7e22ce" opacity="0.52"/>
+    <rect x="40" y="44" width="28" height="12" fill="#c084fc" opacity="0.34"/>
+    <rect x="92" y="8" width="28" height="12" fill="#a855f7" opacity="0.45"/>
+    <rect x="112" y="20" width="36" height="8" fill="#c084fc" opacity="0.36"/>
+    <rect x="104" y="32" width="24" height="12" fill="#9333ea" opacity="0.48"/>
+    <rect x="132" y="48" width="32" height="8" fill="#7e22ce" opacity="0.55"/>
+    <rect x="176" y="4" width="36" height="8" fill="#c084fc" opacity="0.32"/>
+    <rect x="188" y="16" width="28" height="12" fill="#9333ea" opacity="0.5"/>
+    <rect x="208" y="28" width="36" height="8" fill="#d946ef" opacity="0.34"/>
+    <rect x="184" y="40" width="32" height="12" fill="#a855f7" opacity="0.44"/>
+    <rect x="256" y="8" width="32" height="12" fill="#7e22ce" opacity="0.54"/>
+    <rect x="276" y="20" width="28" height="12" fill="#a855f7" opacity="0.44"/>
+    <rect x="264" y="36" width="36" height="8" fill="#c084fc" opacity="0.34"/>
+    <rect x="292" y="48" width="28" height="8" fill="#9333ea" opacity="0.5"/>
+    <rect x="328" y="12" width="28" height="12" fill="#d946ef" opacity="0.32"/>
+    <rect x="340" y="28" width="24" height="12" fill="#9333ea" opacity="0.46"/>
+    <rect x="324" y="44" width="32" height="12" fill="#7e22ce" opacity="0.52"/>`;
+
+  const rippleTileB = `
+    <rect x="20" y="8" width="20" height="8" fill="#e879f9" opacity="0.28"/>
+    <rect x="64" y="28" width="28" height="8" fill="#c084fc" opacity="0.32"/>
+    <rect x="80" y="44" width="20" height="8" fill="#f0abfc" opacity="0.24"/>
+    <rect x="140" y="12" width="24" height="8" fill="#e879f9" opacity="0.3"/>
+    <rect x="160" y="36" width="20" height="8" fill="#c084fc" opacity="0.32"/>
+    <rect x="228" y="16" width="24" height="8" fill="#f0abfc" opacity="0.26"/>
+    <rect x="244" y="44" width="28" height="8" fill="#e879f9" opacity="0.28"/>
+    <rect x="304" y="20" width="24" height="8" fill="#c084fc" opacity="0.32"/>
+    <rect x="348" y="4" width="16" height="8" fill="#f0abfc" opacity="0.24"/>`;
+
+  // Blocky pixel vortex swirl arms centered at (0,0) for safe CSS rotation
+  const vortexSwirlOuter = `
+    <rect x="-44" y="-20" width="20" height="4" fill="#c084fc" opacity="0.55"/>
+    <rect x="-28" y="-24" width="28" height="4" fill="#e879f9" opacity="0.5"/>
+    <rect x="0" y="-20" width="20" height="4" fill="#a855f7" opacity="0.55"/>
+    <rect x="16" y="-16" width="16" height="4" fill="#c084fc" opacity="0.5"/>
+    <rect x="28" y="-12" width="12" height="8" fill="#d946ef" opacity="0.45"/>
+    <rect x="24" y="16" width="20" height="4" fill="#c084fc" opacity="0.55"/>
+    <rect x="0" y="20" width="28" height="4" fill="#e879f9" opacity="0.5"/>
+    <rect x="-20" y="16" width="20" height="4" fill="#a855f7" opacity="0.55"/>
+    <rect x="-32" y="12" width="16" height="4" fill="#c084fc" opacity="0.5"/>
+    <rect x="-40" y="4" width="12" height="8" fill="#d946ef" opacity="0.45"/>`;
+
+  const vortexSwirlInner = `
+    <rect x="-20" y="-12" width="16" height="4" fill="#f0abfc" opacity="0.55"/>
+    <rect x="-4" y="-16" width="16" height="4" fill="#ffffff" opacity="0.35"/>
+    <rect x="12" y="-12" width="8" height="8" fill="#e879f9" opacity="0.5"/>
+    <rect x="4" y="8" width="16" height="4" fill="#f0abfc" opacity="0.55"/>
+    <rect x="-12" y="12" width="16" height="4" fill="#ffffff" opacity="0.35"/>
+    <rect x="-20" y="4" width="8" height="8" fill="#e879f9" opacity="0.5"/>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 116" width="1000" height="116" shape-rendering="crispEdges" role="img" aria-label="${escapeXml(label)}">
+  <title>${escapeXml(label)}</title>
+
+  <defs>
+    <clipPath id="portal-inner-clip">
+      <rect x="132" y="26" width="736" height="64"/>
+    </clipPath>
+
+    <g id="obsidian-a">${obsASvg}</g>
+    <g id="obsidian-b">${obsBSvg}</g>
+    <g id="crying-obsidian">${cryObsSvg}</g>
+    <g id="portal-ripple-a">${rippleTileA}</g>
+    <g id="portal-ripple-b">${rippleTileB}</g>
+    <g id="vortex-outer">${vortexSwirlOuter}</g>
+    <g id="vortex-inner">${vortexSwirlInner}</g>
+    <g id="spark-cross">
+      <rect x="-1" y="-3" width="2" height="6" fill="#f5d0fe"/>
+      <rect x="-3" y="-1" width="6" height="2" fill="#f5d0fe"/>
+      <rect x="-1" y="-1" width="2" height="2" fill="#ffffff"/>
+    </g>
+  </defs>
+
+  <style>
+    @keyframes portalAura {
+      0%, 100% { opacity: 0.14; }
+      50% { opacity: 0.30; }
+    }
+    .portal-aura { animation: portalAura 3.4s ease-in-out infinite; }
+
+    @keyframes portalScrollA {
+      from { transform: translateX(0); }
+      to { transform: translateX(368px); }
+    }
+    @keyframes portalScrollB {
+      from { transform: translateX(0); }
+      to { transform: translateX(-368px); }
+    }
+    .ripple-a { animation: portalScrollA 9s linear infinite; }
+    .ripple-b { animation: portalScrollB 6.5s linear infinite; }
+
+    @keyframes vortexCW {
+      from { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.12); }
+      to { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes vortexCCW {
+      from { transform: rotate(360deg) scale(1.06); }
+      50% { transform: rotate(180deg) scale(0.92); }
+      to { transform: rotate(0deg) scale(1.06); }
+    }
+    .vortex-cw { animation: vortexCW 11s linear infinite; }
+    .vortex-ccw { animation: vortexCCW 7.5s linear infinite; }
+    .vortex-side-l { animation: vortexCW 9.5s linear infinite; }
+    .vortex-side-r { animation: vortexCCW 9.5s linear infinite; }
+
+    @keyframes corePulse {
+      0%, 100% { opacity: 0.38; transform: scaleX(0.95); }
+      50% { opacity: 0.72; transform: scaleX(1.05); }
+    }
+    .portal-core { animation: corePulse 3.2s ease-in-out infinite; }
+
+    @keyframes glintWave {
+      0% { transform: translateX(-110px) skewX(-24deg); opacity: 0; }
+      14% { opacity: 0.30; }
+      46% { transform: translateX(820px) skewX(-24deg); opacity: 0; }
+      100% { transform: translateX(820px) skewX(-24deg); opacity: 0; }
+    }
+    .portal-glint { animation: glintWave 5.4s linear infinite; }
+
+    @keyframes particleRise {
+      0% { transform: translate(0, 6px); opacity: 0; }
+      22% { opacity: 0.95; }
+      78% { opacity: 0.7; }
+      100% { transform: translate(8px, -16px); opacity: 0; }
+    }
+    @keyframes particleSuckL {
+      0% { transform: translate(-14px, -6px); opacity: 0; }
+      25% { opacity: 0.95; }
+      100% { transform: translate(16px, 4px); opacity: 0; }
+    }
+    @keyframes particleSuckR {
+      0% { transform: translate(14px, 6px); opacity: 0; }
+      25% { opacity: 0.95; }
+      100% { transform: translate(-16px, -4px); opacity: 0; }
+    }
+    @keyframes sparkBlink {
+      0%, 100% { opacity: 0.25; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+    .p-rise-1 { animation: particleRise 2.8s steps(7, end) infinite; }
+    .p-rise-2 { animation: particleRise 3.4s steps(7, end) 0.9s infinite; }
+    .p-rise-3 { animation: particleRise 3.1s steps(7, end) 1.8s infinite; }
+    .p-suck-l1 { animation: particleSuckL 2.6s steps(6, end) infinite; }
+    .p-suck-l2 { animation: particleSuckL 3.2s steps(6, end) 1.3s infinite; }
+    .p-suck-r1 { animation: particleSuckR 2.7s steps(6, end) 0.5s infinite; }
+    .p-suck-r2 { animation: particleSuckR 3.3s steps(6, end) 1.7s infinite; }
+    .p-spark-1 { animation: sparkBlink 2.2s steps(3, end) infinite; }
+    .p-spark-2 { animation: sparkBlink 2.8s steps(3, end) 1.1s infinite; }
+
+    @keyframes cubeBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    .portal-cube { animation: cubeBob 2.4s steps(2, end) infinite; }
+
+    @keyframes arrowNudge {
+      0%, 100% { transform: translateX(0); opacity: 0.85; }
+      50% { transform: translateX(4px); opacity: 1; }
+    }
+    .portal-arrow { animation: arrowNudge 1.8s steps(2, end) infinite; }
+
+    @keyframes cryGlow {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.95; }
+    }
+    .cry-glow { animation: cryGlow 2.8s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .portal-aura, .ripple-a, .ripple-b,
+      .vortex-cw, .vortex-ccw, .vortex-side-l, .vortex-side-r,
+      .portal-core, .portal-glint,
+      .p-rise-1, .p-rise-2, .p-rise-3,
+      .p-suck-l1, .p-suck-l2, .p-suck-r1, .p-suck-r2,
+      .p-spark-1, .p-spark-2, .portal-cube, .portal-arrow, .cry-glow {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <!-- 1. 下界传送门外围紫色光晕 -->
+  <rect x="104" y="2" width="792" height="112" fill="#7e22ce" opacity="0.09"/>
+  <rect x="110" y="6" width="780" height="104" fill="#a855f7" class="portal-aura"/>
+
+  <!-- 2. 黑曜石外轮廓（与快捷栏、橡木告示牌 114..886 像素级对齐） -->
+  <path d="M118,6 H882 V10 H886 V106 H882 V110 H118 V106 H114 V10 H118 Z" fill="#06030d"/>
+
+  <!-- 3. 16×16 经典 MC 黑曜石方块边框（四角哭泣黑曜石） -->
+  <g>
+    ${obsidianTiles.join('\n    ')}
+  </g>
+  <!-- 黑曜石立体高光与暗部倒角 -->
+  <rect x="116" y="10" width="768" height="2" fill="#6b3fa8" opacity="0.55"/>
+  <rect x="116" y="10" width="2" height="96" fill="#522e85" opacity="0.55"/>
+  <rect x="116" y="104" width="768" height="2" fill="#090412" opacity="0.85"/>
+  <rect x="882" y="10" width="2" height="96" fill="#090412" opacity="0.85"/>
+  <!-- 四角哭泣黑曜石脉冲紫芒 -->
+  <g class="cry-glow">
+    <rect x="120" y="14" width="4" height="4" fill="#f5d0fe"/>
+    <rect x="874" y="14" width="4" height="4" fill="#f5d0fe"/>
+    <rect x="120" y="96" width="4" height="4" fill="#f5d0fe"/>
+    <rect x="874" y="96" width="4" height="4" fill="#f5d0fe"/>
+  </g>
+
+  <!-- 4. 下界传送门内部紫色漩涡能量幕 -->
+  <g clip-path="url(#portal-inner-clip)">
+    <!-- 阶梯深紫基底 -->
+    <rect x="132" y="26" width="736" height="64" fill="#2e0754"/>
+    <rect x="132" y="32" width="736" height="52" fill="#430c7a"/>
+    <rect x="132" y="40" width="736" height="36" fill="#5b12a3"/>
+    <rect x="132" y="48" width="736" height="20" fill="#7319c7"/>
+
+    <!-- 中心脉冲能量核 -->
+    <g transform="translate(500, 58)">
+      <g class="portal-core">
+        <rect x="-260" y="-22" width="520" height="44" fill="#9333ea" opacity="0.45"/>
+        <rect x="-176" y="-14" width="352" height="28" fill="#c084fc" opacity="0.35"/>
+      </g>
+    </g>
+
+    <!-- 双向循环像素波纹层（还原 MC 传送门流动质感） -->
+    <g transform="translate(132, 26)">
+      <g class="ripple-a">
+        <use href="#portal-ripple-a" x="-368"/>
+        <use href="#portal-ripple-a" x="0"/>
+        <use href="#portal-ripple-a" x="368"/>
+      </g>
+      <g class="ripple-b">
+        <use href="#portal-ripple-b" x="0"/>
+        <use href="#portal-ripple-b" x="368"/>
+        <use href="#portal-ripple-b" x="736"/>
+      </g>
+    </g>
+
+    <!-- 左、中、右三组 CSS 旋转紫色像素漩涡 -->
+    <g transform="translate(184, 58)">
+      <g class="vortex-side-l"><use href="#vortex-outer"/></g>
+      <g class="vortex-ccw"><use href="#vortex-inner"/></g>
+    </g>
+    <g transform="translate(500, 58)">
+      <g class="vortex-cw"><use href="#vortex-outer"/></g>
+      <g class="vortex-ccw"><use href="#vortex-inner"/></g>
+    </g>
+    <g transform="translate(816, 58)">
+      <g class="vortex-side-r"><use href="#vortex-outer"/></g>
+      <g class="vortex-cw"><use href="#vortex-inner"/></g>
+    </g>
+
+    <!-- 斜向附魔紫光扫掠 -->
+    <g transform="translate(132, 26)">
+      <rect x="0" y="0" width="52" height="64" fill="#f5d0fe" class="portal-glint"/>
+    </g>
+
+    <!-- 传送门内侧粒子（向心吸入与漂浮紫点） -->
+    <g>
+      <rect x="164" y="40" width="4" height="4" fill="#f5d0fe" class="p-suck-l1"/>
+      <rect x="188" y="70" width="4" height="4" fill="#e879f9" class="p-suck-l2"/>
+      <rect x="242" y="34" width="4" height="4" fill="#d8b4fe" class="p-rise-2"/>
+      <rect x="276" y="76" width="4" height="4" fill="#f0abfc" class="p-rise-1"/>
+      <rect x="332" y="36" width="4" height="4" fill="#e879f9" class="p-rise-3"/>
+      <rect x="664" y="74" width="4" height="4" fill="#f0abfc" class="p-rise-2"/>
+      <rect x="720" y="36" width="4" height="4" fill="#d8b4fe" class="p-rise-1"/>
+      <rect x="758" y="68" width="4" height="4" fill="#e879f9" class="p-suck-r1"/>
+      <rect x="822" y="42" width="4" height="4" fill="#f5d0fe" class="p-suck-r2"/>
+      <rect x="844" y="72" width="4" height="4" fill="#c084fc" class="p-rise-3"/>
+      <g transform="translate(154, 66)"><use href="#spark-cross" class="p-spark-1"/></g>
+      <g transform="translate(254, 52)"><use href="#spark-cross" class="p-spark-2"/></g>
+      <g transform="translate(742, 48)"><use href="#spark-cross" class="p-spark-1"/></g>
+      <g transform="translate(838, 34)"><use href="#spark-cross" class="p-spark-2"/></g>
+    </g>
+
+    <!-- 传送门凹槽阴影与紫光内边 -->
+    <rect x="132" y="26" width="736" height="3" fill="#140326" opacity="0.72"/>
+    <rect x="132" y="26" width="3" height="64" fill="#140326" opacity="0.72"/>
+    <rect x="132" y="87" width="736" height="3" fill="#e879f9" opacity="0.35"/>
+    <rect x="865" y="26" width="3" height="64" fill="#e879f9" opacity="0.35"/>
+  </g>
+
+  <!-- 5. 溢出到黑曜石边框外的发光紫色粒子 -->
+  <g>
+    <rect x="104" y="36" width="4" height="4" fill="#e879f9" class="p-rise-1"/>
+    <rect x="108" y="76" width="4" height="4" fill="#c084fc" class="p-rise-3"/>
+    <rect x="296" y="4" width="4" height="4" fill="#f5d0fe" class="p-rise-2"/>
+    <rect x="698" y="4" width="4" height="4" fill="#e879f9" class="p-rise-1"/>
+    <rect x="890" y="34" width="4" height="4" fill="#f0abfc" class="p-rise-2"/>
+    <rect x="892" y="74" width="4" height="4" fill="#c084fc" class="p-rise-1"/>
+    <rect x="424" y="108" width="4" height="4" fill="#d8b4fe" class="p-rise-3"/>
+    <rect x="576" y="108" width="4" height="4" fill="#f0abfc" class="p-rise-2"/>
+  </g>
+
+  <!-- 6. 中央高对比度半透铭牌 + 3D 像素方块图标 + 引导文字 + 箭头 -->
+  <g>
+    <!-- 像素切角深紫半透底板，保证漩涡背景上的文字清晰易读 -->
+    <path d="M240,36 H760 V40 H764 V76 H760 V80 H240 V76 H236 V40 H240 Z" fill="#120426" opacity="0.74"/>
+    <rect x="240" y="36" width="520" height="2" fill="#e879f9" opacity="0.72"/>
+    <rect x="240" y="78" width="520" height="2" fill="#090214" opacity="0.9"/>
+    <rect x="236" y="40" width="2" height="36" fill="#c084fc" opacity="0.5"/>
+    <rect x="762" y="40" width="2" height="36" fill="#4c1d95" opacity="0.8"/>
+
+    <!-- 左侧漂浮 3D MC 草方块图标 -->
+    <g transform="translate(250, 43)">
+      <g class="portal-cube">${blockIconSvg}</g>
+    </g>
+
+    <!-- 居中主文字（立体像素阴影 + 亮白前景） -->
+    <text x="502" y="66.5" text-anchor="middle" fill="#070112" font-family="${uiFont}" font-size="${fontSize}" font-weight="900" letter-spacing="${letterSpacing}" shape-rendering="geometricPrecision">${escapeXml(label)}</text>
+    <text x="501" y="65.5" text-anchor="middle" fill="#581c87" font-family="${uiFont}" font-size="${fontSize}" font-weight="900" letter-spacing="${letterSpacing}" shape-rendering="geometricPrecision">${escapeXml(label)}</text>
+    <text x="500" y="64.5" text-anchor="middle" fill="#faf5ff" font-family="${uiFont}" font-size="${fontSize}" font-weight="900" letter-spacing="${letterSpacing}" shape-rendering="geometricPrecision">${escapeXml(label)}</text>
+
+    <!-- 右侧动态像素双箭头 » -->
+    <g transform="translate(722, 48)">
+      <g class="portal-arrow">
+      <!-- 阴影 -->
+      <rect x="2" y="2" width="4" height="4" fill="#090214"/>
+      <rect x="6" y="6" width="4" height="4" fill="#090214"/>
+      <rect x="10" y="10" width="4" height="4" fill="#090214"/>
+      <rect x="6" y="14" width="4" height="4" fill="#090214"/>
+      <rect x="2" y="18" width="4" height="4" fill="#090214"/>
+      <rect x="12" y="2" width="4" height="4" fill="#090214"/>
+      <rect x="16" y="6" width="4" height="4" fill="#090214"/>
+      <rect x="20" y="10" width="4" height="4" fill="#090214"/>
+      <rect x="16" y="14" width="4" height="4" fill="#090214"/>
+      <rect x="12" y="18" width="4" height="4" fill="#090214"/>
+      <!-- 亮白紫箭头 -->
+      <rect x="0" y="0" width="4" height="4" fill="#e879f9"/>
+      <rect x="4" y="4" width="4" height="4" fill="#f5d0fe"/>
+      <rect x="8" y="8" width="4" height="4" fill="#ffffff"/>
+      <rect x="4" y="12" width="4" height="4" fill="#f5d0fe"/>
+      <rect x="0" y="16" width="4" height="4" fill="#e879f9"/>
+      <rect x="10" y="0" width="4" height="4" fill="#e879f9"/>
+      <rect x="14" y="4" width="4" height="4" fill="#f5d0fe"/>
+      <rect x="18" y="8" width="4" height="4" fill="#ffffff"/>
+      <rect x="14" y="12" width="4" height="4" fill="#f5d0fe"/>
+      <rect x="10" y="16" width="4" height="4" fill="#e879f9"/>
+      </g>
+    </g>
+  </g>
+</svg>
+`;
+}
+
+// ============================================================================
 // 6. Minecraft Oak Sign Guestbook SVG Generator (1000 x 248)
 // ============================================================================
 function generateGuestbook({ data, lang }) {
@@ -1607,6 +2086,11 @@ function generateReadme(lang) {
   const enBtn = isZh ? './assets/btn-en-idle.svg' : './assets/btn-en-active.svg';
   const bannerFile = isZh ? './assets/mc-banner-zh.svg' : './assets/mc-banner-en.svg';
   const hotbarFile = isZh ? './assets/mc-hotbar-zh.svg' : './assets/mc-hotbar-en.svg';
+  const portalFile = isZh ? './assets/portal-zh.svg' : './assets/portal-en.svg';
+  const portalUrl = config.portal?.url || 'https://hufangyuan460-blip.github.io';
+  const portalAlt = isZh
+    ? (config.portal?.label?.zh || '穿过传送门 · 进入 3D 方块世界')
+    : (config.portal?.label?.en || 'ENTER PORTAL · 3D BLOCK WORLD');
   const guestbookFile = isZh ? './assets/guestbook-zh.svg' : './assets/guestbook-en.svg';
   const diamondBtnFile = isZh ? './assets/btn-diamond-zh.svg' : './assets/btn-diamond-en.svg';
   const signBtnFile = isZh ? './assets/btn-sign-zh.svg' : './assets/btn-sign-en.svg';
@@ -1629,6 +2113,10 @@ function generateReadme(lang) {
 
 <div align="center">
   <img src="${hotbarFile}" alt="Minecraft Hotbar" width="100%" />
+</div>
+
+<div align="center">
+  <a href="${portalUrl}"><img src="${portalFile}" alt="${escapeXml(portalAlt)}" width="100%" /></a>
 </div>
 
 <div align="center">
@@ -1759,6 +2247,15 @@ export function generateAll({ guestbookOnly = false } = {}) {
     items: config.hotbar.items,
     activeSlot: config.hotbar.activeSlot,
     showHudStats: config.hotbar.showHudStats,
+    lang: 'en',
+  }));
+
+  writeOut('assets/portal-zh.svg', generatePortal({
+    label: config.portal?.label?.zh || '穿过传送门 · 进入 3D 方块世界',
+    lang: 'zh',
+  }));
+  writeOut('assets/portal-en.svg', generatePortal({
+    label: config.portal?.label?.en || 'ENTER PORTAL · 3D BLOCK WORLD',
     lang: 'en',
   }));
 
